@@ -14,6 +14,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private int moneyOnDeath;
 
     private ITargetMoveController moveController;
+    private IPathfindingController pathfindController;
 
     // ... would require that others keep an explicit reference to the enemy!
     public delegate void EnemyKilledEvent();
