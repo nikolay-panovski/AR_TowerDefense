@@ -1,0 +1,18 @@
+# Image and texture formats
+*.gif filter=lfs diff=lfs merge=lfs -text
+*.ico filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.webp filter=lfs diff=lfs merge=lfs -text
+*.tga filter=lfs diff=lfs merge=lfs -text
+*.tif filter=lfs diff=lfs merge=lfs -text
+# Materials and 3D Models
+*.mat filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.FBX filter=lfs diff=lfs merge=lfs -text
+# Other
+*.exe filter=lfs diff=lfs merge=lfs -text 
+
+# Update: Do not store the useless archive in LFS
+# Assets/Editor/Migration/com.ptc.vuforia.engine-10.4.4.tgz filter=lfs diff=lfs merge=lfs -text
