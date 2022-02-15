@@ -23,6 +23,7 @@
 # Archives
 *.zip
 *.tgz
+*.txt
 
 # Documents
 *.pdf
