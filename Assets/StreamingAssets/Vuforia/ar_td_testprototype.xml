@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="Drone_End" size="1.000000 1.728516" />
+    <ImageTarget name="Astronaut_Waypoint2" size="1.000000 1.728516" />
+    <ImageTarget name="Astronaut_Tower" size="1.000000 1.728516" />
+    <ImageTarget name="Astronaut_Waypoint1" size="1.000000 1.728516" />
+    <ImageTarget name="Astronaut_Start" size="1.000000 1.728516" />
+  </Tracking>
+</QCARConfig>
