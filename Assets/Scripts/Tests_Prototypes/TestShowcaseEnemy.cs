@@ -4,18 +4,16 @@ using Vuforia;
 
 public class TestShowcaseEnemy : MonoBehaviour
 {
-    // needs X ImageTargets in database -> consider available printed cards
-
     [SerializeField] private float globalSpeed;
     [Tooltip("Distance between Enemy and Waypoint at which the enemy will stop trying to get closer and will go for the next Waypoint. Adjust slightly.")]
     [SerializeField] private float arrivalMargin = 0.064f;
+    [SerializeField] private float maxHP;
 
     // PATHFINDING section
     [SerializeField] private ImageTargetBehaviour[] imageTargetGoals;
     [SerializeField] private GameObject[] augmentationObjects;
     private int currentWP;
 
-    [SerializeField] private float maxHP;
     public float hp { get; private set; }
 
     void Start()
@@ -39,7 +37,7 @@ public class TestShowcaseEnemy : MonoBehaviour
 
         else
         {
-            Debug.Log("waypoint " + currentWP + " ain't tracked");
+            //Debug.Log("waypoint " + currentWP + " ain't tracked");
         }
     }
 

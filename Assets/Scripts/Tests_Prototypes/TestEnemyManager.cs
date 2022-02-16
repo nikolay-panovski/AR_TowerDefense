@@ -34,7 +34,7 @@ public class TestEnemyManager : MonoBehaviour
                 newEnemy.SetActive(true);
                 newEnemy.GetComponent<TestShowcaseEnemy>().enabled = true;
                 newEnemy.tag = "Enemy";
-                AddChild(newEnemy);
+                AddChild(newEnemy);     // despite this, enemies still spawn from ~nowhere!
 
                 lastEnemyAt = Time.time;
             }
