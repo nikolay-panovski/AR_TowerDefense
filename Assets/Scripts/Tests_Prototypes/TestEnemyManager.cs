@@ -11,15 +11,15 @@ public class TestEnemyManager : MonoBehaviour
     // (this is in order to not pass manager reference to towers, for simplicity)
     // in which the objects should have TestShowcaseEnemy script
     public static List<GameObject> enemyList = new List<GameObject>();
-    [SerializeField] private GameObject enemyPrefab;
-    [Header("Seconds for this object to wait before spawning an enemy.")]
+    [Tooltip("Seconds for this object to wait before spawning an enemy.")]
     [SerializeField] private float spawnCooldown = 2.0f;
     private float lastEnemyAt = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        parentImageTarget = transform.parent.GetComponent<ImageTargetBehaviour>();
+        // on ImageTarget
+        parentImageTarget = GetComponent<ImageTargetBehaviour>();
         parentImageTarget.OnTargetStatusChanged += UpdateStatus;
     }
 
@@ -30,19 +30,20 @@ public class TestEnemyManager : MonoBehaviour
         {
             if (Time.time - lastEnemyAt >= spawnCooldown)
             {
-                if (enemyPrefab != null)
-                {
-                    GameObject newEnemy = Instantiate(enemyPrefab);
-                    enemyList.Add(newEnemy);
-                }
-                else
-                {
-                    Debug.LogError("Enemy Prefab is empty, assign one to spawn enemies!");
-                }
+                GameObject newEnemy = Instantiate(GameObject.FindWithTag("PrototypeEnemy"));
+                newEnemy.SetActive(true);
+                newEnemy.GetComponent<TestShowcaseEnemy>().enabled = true;
+                newEnemy.tag = "Enemy";
+                AddChild(newEnemy);
 
                 lastEnemyAt = Time.time;
             }
         }
+    }
+
+    public void AddChild(GameObject child)
+    {
+        child.transform.parent = this.transform;
     }
 
     public void UpdateStatus(ObserverBehaviour ob, TargetStatus status)

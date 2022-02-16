@@ -12,9 +12,9 @@ public class TestShowcaseTower : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private float shootCooldown = 2.0f;
     private float bulletCooldown = 0.0f;
-    private bool enemyInRange = false;
+    private GameObject firstEnemyInRange = null;
 
-    [Header("Set to true to print distance between this tower and an enemy to the console. It will be printed every frame!")]
+    [Tooltip("Set to true to print distance between this tower and an enemy to the console. It will be printed every frame!")]
     [SerializeField] private bool printDistance = false;
 
     // Start is called before the first frame update
@@ -29,9 +29,9 @@ public class TestShowcaseTower : MonoBehaviour
     {
         if (isActive)
         {
-            enemyInRange = checkForEnemiesInRange();
+            firstEnemyInRange = checkForEnemiesInRange();
 
-            if (enemyInRange)
+            if (firstEnemyInRange != null)
             {
                 bulletCooldown += Time.deltaTime;
 
@@ -40,8 +40,11 @@ public class TestShowcaseTower : MonoBehaviour
                     if (bulletPrefab != null)
                     {
                         GameObject newBullet = Instantiate(bulletPrefab);
-                        bulletPrefab.GetComponent<TestBullet>().dmg = this.damage;
-                        //newBullet.transform.localScale *= 0.04f;      // for "guidance"
+                        newBullet.transform.parent = transform.parent /*this.transform*/;
+                        TestBullet script = newBullet.GetComponent<TestBullet>();
+                        script.dmg = this.damage;
+                        script.followEnemy = firstEnemyInRange;
+                        //newBullet.transform.localScale *= 0.04f;      // for "guidance" in case rescaling is needed
                     }
                     else
                     {
@@ -54,25 +57,48 @@ public class TestShowcaseTower : MonoBehaviour
         } 
     }
 
-    private bool checkForEnemiesInRange()
+    private GameObject checkForEnemiesInRange()
     {
-        GameObject firstEnemy = TestEnemyManager.enemyList[0];
+        /**/
+        GameObject enemy = GameObject.FindWithTag("Enemy");
 
-        if (firstEnemy != null)
+        if (enemy == null)
         {
-            float distance = Vector3.Distance(firstEnemy.transform.position, this.transform.position);
+            return null;
+        }
+        else
+        {
+            float distance = Vector3.Distance(enemy.transform.position, this.transform.position);
             if (printDistance)
             {
-                Debug.Log("Distance between tower and first enemy: " + distance + " (tower range is: " + range + ")");
+                Debug.Log("Distance between tower and enemy: " + distance + " (tower range is: " + range + ")");
             }
 
             if (distance < range)
             {
-                return true;
+                return enemy;
             }
         }
 
-        return false;
+        return null;
+        /**/
+
+        /**
+        foreach (GameObject enemy in TestEnemyManager.enemyList)
+        {
+            float distance = Vector3.Distance(enemy.transform.position, this.transform.position);
+            if (printDistance)
+            {
+                Debug.Log("Distance between tower and enemy: " + distance + " (tower range is: " + range + ")");
+            }
+
+            if (distance < range)
+            {
+                return enemy;
+            }
+        }
+        return null;
+        /**/
     }
 
     public void UpdateStatus(ObserverBehaviour ob, TargetStatus status)

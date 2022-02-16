@@ -7,39 +7,40 @@ public class TestShowcaseEnemy : MonoBehaviour
     // needs X ImageTargets in database -> consider available printed cards
 
     [SerializeField] private float globalSpeed;
-    [Header("Distance between Enemy and Waypoint at which the enemy will stop trying to get closer and will go for the next Waypoint. Adjust slightly.")]
+    [Tooltip("Distance between Enemy and Waypoint at which the enemy will stop trying to get closer and will go for the next Waypoint. Adjust slightly.")]
     [SerializeField] private float arrivalMargin = 0.064f;
 
     // PATHFINDING section
     [SerializeField] private ImageTargetBehaviour[] imageTargetGoals;
-    private MeshRenderer[] imageTargetRenderers;
-    // for once, bad decoupling
     [SerializeField] private GameObject[] augmentationObjects;
-    [SerializeField] private string[] targetedImageNames;
     private int currentWP;
 
     [SerializeField] private float maxHP;
-    private float hp;
+    public float hp { get; private set; }
 
     void Start()
     {
+
         currentWP = 0;
 
         hp = maxHP;
-
-        for (int i = 0; i < imageTargetGoals.Length; i++)
-        {
-            imageTargetRenderers[i] = imageTargetGoals[i].GetComponent<MeshRenderer>();
-        }
     }
 
     void Update()
     {
-        // detection of the other object as target and move towards there
-        if (imageTargetRenderers[currentWP].enabled == true)
+        Status nextWPStatus = imageTargetGoals[currentWP].TargetStatus.Status;
+        StatusInfo nextWPStatusInfo = imageTargetGoals[currentWP].TargetStatus.StatusInfo;
+
+        if ((nextWPStatus == Status.TRACKED || nextWPStatus == Status.EXTENDED_TRACKED)
+            && nextWPStatusInfo == StatusInfo.NORMAL)
         {
             moveTowardsWaypoint();
-        }   
+        }
+
+        else
+        {
+            Debug.Log("waypoint " + currentWP + " ain't tracked");
+        }
     }
 
     private void moveTowardsWaypoint()
