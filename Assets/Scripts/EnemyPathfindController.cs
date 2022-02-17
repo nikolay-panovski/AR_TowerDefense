@@ -10,19 +10,21 @@ public interface IPathfindingController
 
     // Unity NavMeshPath contains a Vector3[] corners (waypoints). However the movement is done internally -
     // it is not guaranteed they are using methods as below. Especially if a form of node graph is used there but not here.
-    public void SetActiveWaypoint();
+    public Waypoint GetActiveWaypoint();    // dependency on a class Waypoint existing
+    public bool SetActiveWaypoint();        // returns whether it was successful or not
+    public void AddWaypointToList(Waypoint wp);
 }
 
 public class EnemyPathfindController : MonoBehaviour, IPathfindingController
 {
     // Hardcoded limit of 10 per convention in Waypoint.cs and team agreement.
-    // Must implement detection of the physical card objects and their positions for dynamic (via cards) waypointing.
+    // Physical cards CAN be moved and this should already update the enemy path, because it is based on the contained Waypoints' transform positions.
 
-    Waypoint[] waypointManager = new Waypoint[10];
-    public Waypoint activeWaypoint { get; private set; } = null;     // the waypoint the enemy immediately walks to next
+    private Waypoint[] waypointManager = new Waypoint[10];
+    private Waypoint activeWaypoint = null;     // the waypoint the enemy immediately walks to next
 
-    public delegate void PathfinderReadyEvent(int id);
-    public event PathfinderReadyEvent OnPathfinderReady;
+    //public delegate void PathfinderReadyEvent(int id);
+    //public event PathfinderReadyEvent OnPathfinderReady;
 
     private void Start()
     {
@@ -39,8 +41,36 @@ public class EnemyPathfindController : MonoBehaviour, IPathfindingController
         }
     }
 
-    public void SetActiveWaypoint()
+    public Waypoint GetActiveWaypoint()
     {
-        // activeWaypoint = next earliest non-NULL waypoint from array
+        return activeWaypoint;
+    }
+
+    /// <summary>
+    /// In this implementation, sets active Waypoint to the next valid one within the list of this controller.
+    /// Setting to an arbitrary one is not possible.
+    /// </summary>
+    /// <returns>
+    /// True if setting was successful, false if no more valid Waypoints are found (in which case assume the enemy has reached the end).
+    /// </returns>
+    public bool SetActiveWaypoint()
+    {
+        Waypoint ogWP = activeWaypoint;
+
+        int i = 1;
+        do
+        {
+            activeWaypoint = waypointManager[activeWaypoint.orderID + i];
+            i++;
+
+            // break check after hitting the end of the array and revert to the original waypoint
+            if (activeWaypoint.orderID + i >= waypointManager.Length)
+            {
+                activeWaypoint = ogWP;
+                return false;
+            }
+        } while (activeWaypoint == null);
+
+        return true;
     }
 }

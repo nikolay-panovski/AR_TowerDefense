@@ -2,10 +2,11 @@ using System;
 using UnityEngine;
 using Vuforia;
 
-// Attach as a child GameObject to an ImageTarget to enable simple pathfinding via physical cards.
+// Container for the position of a dedicated ImageTarget object (physical cards) for enemy pathfinding.
+// Attach as a child GameObject to an ImageTarget.
 public class Waypoint : MonoBehaviour
 {
-    [SerializeField] private /*IPathfindingController*/ EnemyPathfindController pathfindingController;
+    [SerializeField] private IPathfindingController /*EnemyPathfindController*/ pathfindingController;
 
     private ImageTargetBehaviour parentTarget;
     private string imageTargetName;
