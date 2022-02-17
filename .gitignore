@@ -9,6 +9,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/[Uu]ser[Ss]ettings/
 
 
 # Custom ignores: 
@@ -40,6 +41,10 @@ IngameDebugConsole/
 
 # Anything about Area Targets (will not be used - check if errors)
 AreaTarget/
+
+# Ignore Unity build backup folders
+*BackUpThisFolder*/
+*BurstDebugInformation*/
 
 # End Custom ignores
 

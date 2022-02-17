@@ -8,13 +8,18 @@ public interface ITargetMoveController
 
 public class EnemyMoveController : MonoBehaviour, ITargetMoveController
 {
+    private Vector3 destination;
+
     public void SetDestination(Vector3 dest)
     {
-
+        destination = dest;
     }
 
     public void Move(Vector3 offset)
     {
+        // towards destination
+        Vector3 distVec = destination - /**/this.transform.parent.position;
+
         /*
         // FROM TestShowcaseEnemy.cs UNTIL REIMPLEMENTATION
         if (imageTargetGoal.TargetName == targetedImageName)

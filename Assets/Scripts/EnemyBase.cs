@@ -14,7 +14,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private int moneyOnDeath;
 
     private ITargetMoveController moveController;
-    private IPathfindingController pathfindController;
+    private EnemyPathfindController pathfindController;
 
     // ... would require that others keep an explicit reference to the enemy!
     public delegate void EnemyKilledEvent();
@@ -23,13 +23,18 @@ public class EnemyBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        moveController.SetDestination(Vector3.zero /*first waypoint.position*/);
+        // replace NULL checks with assertion of setting controllers to enemy or auto-setter
+        if (moveController != null && pathfindController != null)
+        {
+            moveController.SetDestination(pathfindController.activeWaypoint.GetPosition());
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //WalkTowardsWaypoint();
+        moveController.Move(/**/new Vector3(speed, speed, speed));
 
         if (hp <= 0)
         {

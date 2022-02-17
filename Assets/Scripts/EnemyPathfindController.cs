@@ -19,7 +19,7 @@ public class EnemyPathfindController : MonoBehaviour, IPathfindingController
     // Must implement detection of the physical card objects and their positions for dynamic (via cards) waypointing.
 
     Waypoint[] waypointManager = new Waypoint[10];
-    private Waypoint activeWaypoint = null;     // the waypoint the enemy immediately walks to next
+    public Waypoint activeWaypoint { get; private set; } = null;     // the waypoint the enemy immediately walks to next
 
     public delegate void PathfinderReadyEvent(int id);
     public event PathfinderReadyEvent OnPathfinderReady;

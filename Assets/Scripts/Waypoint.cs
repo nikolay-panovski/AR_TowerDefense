@@ -14,7 +14,7 @@ public class Waypoint : MonoBehaviour
     private void Start()
     {
         parentTarget = transform.parent.GetComponent<ImageTargetBehaviour>();
-        parentTarget.OnTargetStatusChanged += TestPrintPosition;
+        //parentTarget.OnTargetStatusChanged += TestPrintPosition;
 
         if (pathfindingController == null)
         {
@@ -44,13 +44,5 @@ public class Waypoint : MonoBehaviour
     public Vector3 GetPosition()
     {
         return transform.position;
-    }
-
-    public void TestPrintPosition(ObserverBehaviour ob, TargetStatus status)
-    {
-        if (status.Status == Status.TRACKED && status.StatusInfo == StatusInfo.NORMAL)
-        {
-            
-        }
     }
 }
