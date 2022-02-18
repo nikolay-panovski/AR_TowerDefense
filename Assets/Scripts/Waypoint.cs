@@ -4,6 +4,8 @@ using Vuforia;
 
 // Container for the position of a dedicated ImageTarget object (physical cards) for enemy pathfinding.
 // Attach as a child GameObject to an ImageTarget.
+
+[RequireComponent(typeof(EnemyPathfindController))]
 public class Waypoint : MonoBehaviour
 {
     private /*IPathfindingController*/ EnemyPathfindController pathfindingController;
@@ -12,37 +14,35 @@ public class Waypoint : MonoBehaviour
     private string imageTargetName;
     public int orderID { get; private set; } = -1;
 
-    [SerializeField] private bool enable = false;
-
-    // for dirty testing only
-    private bool testAlreadyEnabledOnce = false;
-    private float countToFourSeconds = 0.0f;
-
     private void Start()
     {
         bool gotPathfController;
+        bool gotImageTarget;
 
         gotPathfController = TryGetComponent<EnemyPathfindController>(out pathfindingController);
 
-        parentTarget = transform.parent.GetComponent<ImageTargetBehaviour>();
+        gotImageTarget = transform.parent.TryGetComponent<ImageTargetBehaviour>(out parentTarget);
         //parentTarget.OnTargetStatusChanged += TestPrintPosition;
 
         if (pathfindingController == null)
         {
             Debug.LogWarning("One or more Waypoints do not have a Pathfinding Controller assigned to their scripts!");
         }
+
+        if (!gotImageTarget)
+        {
+            Debug.LogWarning("No ImageTarget got, Waypoint will not be able to geet ID!");
+        }
     }
 
     private void Update()
     {
-        if (enable) enabled = true;
+        
+    }
 
-        // force enable scripts after 4 seconds for phone test purposes
-        if (!testAlreadyEnabledOnce && Time.time - countToFourSeconds > 4.0f)
-        {
-            enable = true;
-            testAlreadyEnabledOnce = true;
-        }
+    public void TestEnable()
+    {
+        enabled = true;
     }
 
     // WHOLE OBJECT, OR THIS SCRIPT, HAS TO START AS DISABLED! else must find another trigger, consider OnTargetStatusChanged directly.

@@ -18,6 +18,12 @@ public class GameManager : ScriptableObject
         DECREASE
     }
 
+    public void SetWaveToActive()
+    {
+        isWaveActive.value = true;
+        Debug.Log("Wave is active? " + isWaveActive.value);
+    }
+
     public void ModifyPlayerValue(IntValue value, Modification modification, int byValue)
     {
         switch (modification)
