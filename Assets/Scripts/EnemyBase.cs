@@ -4,6 +4,10 @@ using UnityEngine;
 // can walk forward with its typical speed from one waypoint passed to it to another,       -- EnemyMoveController (interface here, implement elsewhere)
 // can die and update the player money on death,                                            -- this (HP check) + fire event on killed
 // can reach goal, dying in the process and updating the player health on death.            -- this (interaction check) + fire event on goal/destroy
+
+// Unity can go perform sudoku honestly
+[RequireComponent(typeof(EnemyAutoMoveController))]
+[RequireComponent(typeof(EnemyPathfindController))]
 public class EnemyBase : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
@@ -20,18 +24,22 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private int minScrapOnDeath;
     [SerializeField] private int maxScrapOnDeath;
 
-    // !! IMPORTANT! DUE TO UNITY'S LIMITATIONS IN SERIALIZING, I HEREBY BREAK THE INTERFACES PRINCIPLE !!
+    // !! Interfaces principle broken and classes are not assignable in Inspector, replaced all that with TryGetComponent !!
     // same in TowerBase.cs and wherever else relevant. format (of commented but listed interfaces) also preserved.
-    [SerializeField] private /*ITargetMoveController*/ EnemyAutoMoveController moveController;
-    [SerializeField] private /*IPathfindingController*/ EnemyPathfindController pathfindController;
+    private /*ITargetMoveController*/ EnemyAutoMoveController moveController;
+    private /*IPathfindingController*/ EnemyPathfindController pathfindController;
 
     private bool hasReachedGoal = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        // replace NULL checks with assertion of setting controllers to enemy or auto-setter
-        if (moveController != null && pathfindController != null)
+        bool gotMoveController, gotPathfController;
+
+        gotMoveController = TryGetComponent<EnemyAutoMoveController>(out moveController);
+        gotPathfController = TryGetComponent<EnemyPathfindController>(out pathfindController);
+
+        if (gotMoveController && gotPathfController)
         {
             moveController.SetDestination(pathfindController.GetActiveWaypoint().GetPosition());
         }

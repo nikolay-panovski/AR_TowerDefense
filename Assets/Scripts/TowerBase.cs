@@ -12,6 +12,8 @@ using UnityEngine;
 // Attack ->
 
 [RequireComponent(typeof(Tappable))]
+[RequireComponent(typeof(TowerEnemyChecker))]
+[RequireComponent(typeof(TowerAttackController))]
 public class TowerBase : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
@@ -36,7 +38,7 @@ public class TowerBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bool gotTappable;
+        bool gotTappable, gotChecker, gotAttacker;
         gotTappable = TryGetComponent<Tappable>(out tappable);
 
         if (gotTappable == false)
