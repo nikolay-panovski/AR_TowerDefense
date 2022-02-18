@@ -1,11 +1,6 @@
 using UnityEngine;
 
-public interface IEnemyChecker
-{
-    public void CheckForEnemiesInRange();
-}
-
-public class TowerEnemyChecker : MonoBehaviour, IEnemyChecker
+public class TowerEnemyChecker : MonoBehaviour
 {
     private EnemyBase detectedEnemy;
 

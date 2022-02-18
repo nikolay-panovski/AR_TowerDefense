@@ -1,12 +1,6 @@
 using UnityEngine;
 
-public interface ITargetMoveController
-{
-    public void SetDestination(Vector3 dest);
-    public void MoveTowardsDestination(float speed, out Vector3 distVec);
-}
-
-public class EnemyAutoMoveController : MonoBehaviour, ITargetMoveController
+public class EnemyAutoMoveController : MonoBehaviour
 {
     private Vector3 destination;
 

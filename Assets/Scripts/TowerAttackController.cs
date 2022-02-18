@@ -1,11 +1,6 @@
 using UnityEngine;
 
-public interface IAttackController
-{
-
-}
-
-public class TowerAttackController : MonoBehaviour, IAttackController
+public class TowerAttackController : MonoBehaviour
 {
 
 

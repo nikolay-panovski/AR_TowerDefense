@@ -6,7 +6,7 @@ using Vuforia;
 // Attach as a child GameObject to an ImageTarget.
 public class Waypoint : MonoBehaviour
 {
-    [SerializeField] private IPathfindingController /*EnemyPathfindController*/ pathfindingController;
+    [SerializeField] private /*IPathfindingController*/ EnemyPathfindController pathfindingController;
 
     private ImageTargetBehaviour parentTarget;
     private string imageTargetName;
