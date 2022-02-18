@@ -12,6 +12,8 @@ public class Waypoint : MonoBehaviour
     private string imageTargetName;
     public int orderID { get; private set; } = -1;
 
+    [SerializeField] private bool enable = false;
+
     private void Start()
     {
         parentTarget = transform.parent.GetComponent<ImageTargetBehaviour>();
@@ -21,6 +23,11 @@ public class Waypoint : MonoBehaviour
         {
             Debug.LogWarning("One or more Waypoints do not have a Pathfinding Controller assigned to their scripts in the Inspector!");
         }
+    }
+
+    private void Update()
+    {
+        if (enable) enabled = true;
     }
 
     // WHOLE OBJECT, OR THIS SCRIPT, HAS TO START AS DISABLED! else must find another trigger, consider OnTargetStatusChanged directly.
@@ -39,7 +46,18 @@ public class Waypoint : MonoBehaviour
     {
         imageTargetName = parentTarget.TargetName;
         // limits implementation to "imagefilename_IDhere.img" where IDhere = 0~9 only, for a max of 10 waypoints
-        orderID = Int32.Parse(imageTargetName.Substring(imageTargetName.Length - 2));
+        bool parseSuccess;
+        int tempID;
+
+        parseSuccess = Int32.TryParse(imageTargetName.Substring(imageTargetName.Length - 2), out tempID);
+        if (parseSuccess)
+        {
+            orderID = tempID;
+        }
+        else
+        {
+            Debug.LogError("Image filename parsing for Waypoint ID failed. Did you follow the format 'name_0~9' for the filename?");
+        }
     }
 
     public Vector3 GetPosition()

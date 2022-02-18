@@ -1,5 +1,4 @@
 using UnityEngine;
-using Vuforia;
 
 // Enemy that can be spawned from a start card,                                             -- EnemyManager/Spawner (not contained here)
 // can walk forward with its typical speed from one waypoint passed to it to another,       -- EnemyMoveController (interface here, implement elsewhere)
@@ -9,8 +8,8 @@ public class EnemyBase : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
 
-    [Tooltip("Once an enemy is this close to its active waypoint, it will update and start moving to the next one.")]
-    [SerializeField] private float minDistToWaypoint;
+    [Tooltip("Once an enemy is this close to its active waypoint, it will update and start moving to the next one. Same value for all enemies, set this in the FloatValue.")]
+    [SerializeField] private FloatValue minDistToWaypoint;
 
     [Header("Enemy stats")]
     [SerializeField] private float maxHP;
@@ -21,14 +20,12 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private int minScrapOnDeath;
     [SerializeField] private int maxScrapOnDeath;
 
-    private ITargetMoveController moveController;
-    private IPathfindingController pathfindController;
+    // !! IMPORTANT! DUE TO UNITY'S LIMITATIONS IN SERIALIZING, I HEREBY BREAK THE INTERFACES PRINCIPLE !!
+    // same in TowerBase.cs and wherever else relevant. format (of commented but listed interfaces) also preserved.
+    [SerializeField] private /*ITargetMoveController*/ EnemyAutoMoveController moveController;
+    [SerializeField] private /*IPathfindingController*/ EnemyPathfindController pathfindController;
 
     private bool hasReachedGoal = false;
-
-    // ... would require that others keep an explicit reference to the enemy!
-    public delegate void EnemyKilledEvent();
-    public event EnemyKilledEvent OnEnemyKilled;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +35,10 @@ public class EnemyBase : MonoBehaviour
         {
             moveController.SetDestination(pathfindController.GetActiveWaypoint().GetPosition());
         }
-        
+        else
+        {
+            Debug.LogError("Enemy is missing a Move Controller script and/or a Pathfind Controller script! Errors will happen below!");
+        }
     }
 
     // Update is called once per frame
@@ -46,7 +46,7 @@ public class EnemyBase : MonoBehaviour
     {
         Vector3 distVec;
         moveController.MoveTowardsDestination(speed, out distVec);
-        if (distVec.magnitude < minDistToWaypoint)
+        if (distVec.magnitude < minDistToWaypoint.value)
         {
             hasReachedGoal = !pathfindController.SetActiveWaypoint();
             // **if the enemy path does not change on card move or seems broken, then we'd need to set the destination constantly in Update()
@@ -55,21 +55,26 @@ public class EnemyBase : MonoBehaviour
 
         if (hasReachedGoal)
         {
-            //enemy.OnEnemyReachedGoal()    ## += (gamemanager.)UpdatePlayerHP(decrease);
             gameManager.ModifyPlayerValue(gameManager.playerHP, GameManager.Modification.DECREASE, damageToGoal);
+            Debug.Log("An enemy has reached the goal. Goal HP will decrease.");
+            Debug.Log("Player HP is now: " + gameManager.playerHP);
+            Destroy(gameObject);
         }
+
+        // if (hit by bullet)
 
         if (hp <= 0)
         {
-            OnEnemyKilled?.Invoke();
-            //enemy.OnEnemyKilled()     ## += (gamemanager.)UpdateMoney(increase);
             gameManager.ModifyPlayerValue(gameManager.playerMoney, GameManager.Modification.INCREASE, 
-                gameManager.random.Next(minScrapOnDeath, maxScrapOnDeath));
+                gameManager.random.Next(minScrapOnDeath, maxScrapOnDeath + 1));
+            Debug.Log("An enemy has been killed. Player Money will increase.");
+            Debug.Log("Player Money is now: " + gameManager.playerMoney);
+            Destroy(gameObject);
         }
     }
 
     private void OnDestroy()
     {
-        
+        // any subscribers in the chat
     }
 }
