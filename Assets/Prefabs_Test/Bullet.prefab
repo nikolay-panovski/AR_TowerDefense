@@ -107,8 +107,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3401953686229628554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f856a1f91a73d1b4fa383d2c348e98bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 39d5c1acd8e6284469641b1d0c3a8fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalSpeed: 40
+  globalSpeed: 2
   arrivalMargin: 0.064
