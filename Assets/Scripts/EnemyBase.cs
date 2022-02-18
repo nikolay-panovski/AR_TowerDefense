@@ -34,38 +34,56 @@ public class EnemyBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hp = maxHP;
+        speed = initialSpeed;
+
         bool gotMoveController, gotPathfController;
 
         gotMoveController = TryGetComponent<EnemyAutoMoveController>(out moveController);
         gotPathfController = TryGetComponent<EnemyPathfindController>(out pathfindController);
 
-        if (gotMoveController && gotPathfController)
-        {
-            moveController.SetDestination(pathfindController.GetActiveWaypoint().GetPosition());
-        }
-        else
+        if (!gotMoveController || !gotPathfController)
         {
             Debug.LogError("Enemy is missing a Move Controller script and/or a Pathfind Controller script! Errors will happen below!");
+            //moveController.SetDestination(pathfindController.GetActiveWaypoint().GetPosition());      // activeWP starts as null
+            // if activeWP is null at start and there are still no waypoints, then one gets added to [], set activeWP to that?
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 distVec;
-        moveController.MoveTowardsDestination(speed, out distVec);
-        if (distVec.magnitude < minDistToWaypoint.value)
+        if (gameManager.isWaveActive.value == true)
         {
-            hasReachedGoal = !pathfindController.SetActiveWaypoint();
-            // **if the enemy path does not change on card move or seems broken, then we'd need to set the destination constantly in Update()
-            moveController.SetDestination(pathfindController.GetActiveWaypoint().GetPosition());
+            Waypoint activeWP = pathfindController.GetActiveWaypoint();
+            if (activeWP != null)
+            {
+                moveController.SetDestination(activeWP.GetPosition());
+                Vector3 distVec;
+                moveController.MoveTowardsDestination(speed, out distVec);
+
+                if (distVec.magnitude < minDistToWaypoint.value)
+                {
+                    hasReachedGoal = !pathfindController.SetActiveWaypoint();
+                    // **if the enemy path does not change on card move or seems broken, then we'd need to set the destination constantly in Update()
+                    moveController.SetDestination(pathfindController.GetActiveWaypoint().GetPosition());
+                }
+            }
+
+            else
+            {
+                // ~~except that if this happens, we'd need an error message for the user who did not snapshot waypoints
+                Debug.LogError("No active Waypoints were found. Did you get any rendered from the ImageTargets/cards?");
+            }
         }
+        
+        
 
         if (hasReachedGoal)
         {
             gameManager.ModifyPlayerValue(gameManager.playerHP, GameManager.Modification.DECREASE, damageToGoal);
             Debug.Log("An enemy has reached the goal. Goal HP will decrease.");
-            Debug.Log("Player HP is now: " + gameManager.playerHP);
+            Debug.Log("Player HP is now: " + gameManager.playerHP.value);
             Destroy(gameObject);
         }
 
@@ -76,7 +94,7 @@ public class EnemyBase : MonoBehaviour
             gameManager.ModifyPlayerValue(gameManager.playerMoney, GameManager.Modification.INCREASE, 
                 gameManager.random.Next(minScrapOnDeath, maxScrapOnDeath + 1));
             Debug.Log("An enemy has been killed. Player Money will increase.");
-            Debug.Log("Player Money is now: " + gameManager.playerMoney);
+            Debug.Log("Player Money is now: " + gameManager.playerMoney.value);
             Destroy(gameObject);
         }
     }

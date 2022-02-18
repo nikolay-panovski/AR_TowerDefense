@@ -6,7 +6,7 @@ using Vuforia;
 // Attach as a child GameObject to an ImageTarget.
 public class Waypoint : MonoBehaviour
 {
-    [SerializeField] private /*IPathfindingController*/ EnemyPathfindController pathfindingController;
+    private /*IPathfindingController*/ EnemyPathfindController pathfindingController;
 
     private ImageTargetBehaviour parentTarget;
     private string imageTargetName;
@@ -14,20 +14,35 @@ public class Waypoint : MonoBehaviour
 
     [SerializeField] private bool enable = false;
 
+    // for dirty testing only
+    private bool testAlreadyEnabledOnce = false;
+    private float countToFourSeconds = 0.0f;
+
     private void Start()
     {
+        bool gotPathfController;
+
+        gotPathfController = TryGetComponent<EnemyPathfindController>(out pathfindingController);
+
         parentTarget = transform.parent.GetComponent<ImageTargetBehaviour>();
         //parentTarget.OnTargetStatusChanged += TestPrintPosition;
 
         if (pathfindingController == null)
         {
-            Debug.LogWarning("One or more Waypoints do not have a Pathfinding Controller assigned to their scripts in the Inspector!");
+            Debug.LogWarning("One or more Waypoints do not have a Pathfinding Controller assigned to their scripts!");
         }
     }
 
     private void Update()
     {
         if (enable) enabled = true;
+
+        // force enable scripts after 4 seconds for phone test purposes
+        if (!testAlreadyEnabledOnce && Time.time - countToFourSeconds > 4.0f)
+        {
+            enable = true;
+            testAlreadyEnabledOnce = true;
+        }
     }
 
     // WHOLE OBJECT, OR THIS SCRIPT, HAS TO START AS DISABLED! else must find another trigger, consider OnTargetStatusChanged directly.

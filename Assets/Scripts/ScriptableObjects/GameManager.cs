@@ -8,6 +8,7 @@ public class GameManager : ScriptableObject
 {
     public IntValue playerHP;
     public IntValue playerMoney;
+    public BoolValue isWaveActive;
     //public IntValue timeBetweenWaves;
     public System.Random random { get; } = new System.Random();
 

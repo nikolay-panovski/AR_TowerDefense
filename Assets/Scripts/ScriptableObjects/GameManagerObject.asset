@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHP: {fileID: 11400000, guid: 830511d7264aafa428f6264b8aee280a, type: 2}
   playerMoney: {fileID: 11400000, guid: fcd1b1301c95bd846b199c5162863089, type: 2}
+  isWaveActive: {fileID: 11400000, guid: 0bcad126886baac4a9ac1b7bbd942790, type: 2}
