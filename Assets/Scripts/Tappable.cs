@@ -11,11 +11,6 @@ public class Tappable : MonoBehaviour
         arCamera = Camera.main;
     }
 
-    private void Update()
-    {
-        DetectTaps();
-    }
-
     /// <summary>
     /// The generic Unity raycasting way to detect taps on screen. Add to any object which needs to track tapping.
     /// </summary>

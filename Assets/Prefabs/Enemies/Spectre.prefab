@@ -110,8 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d55e1fbb754d446b04db34956aa76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 11400000, guid: 64aeaa0b1fa92fd4790d36398c5dc119, type: 2}
-  minDistToWaypoint: {fileID: 11400000, guid: 9a0ca66c0fba86b408ccbfd9449fa668, type: 2}
+  gameManager: {fileID: 11400000, guid: 9ccb834f2d37bdb4d9ee4feccf96648f, type: 2}
+  minDistToWaypoint: {fileID: 11400000, guid: 1ae39202cf578124097e853030b0777b, type: 2}
   maxHP: 2000
   initialSpeed: 1
   damageToGoal: 3

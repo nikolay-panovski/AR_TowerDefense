@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4110172754684734e98140ec95ceb1cc, type: 3}
-  m_Name: GameManagerObject
+  m_Script: {fileID: 11500000, guid: 0b473e537a57620468bb4c432028b050, type: 3}
+  m_Name: Enemy Wave 1
   m_EditorClassIdentifier: 
-  playerHP: {fileID: 0}
-  playerMoney: {fileID: 0}
-  isWaveActive: {fileID: 11400000, guid: 843c1d570a7679043b1b84e9dd0e653d, type: 2}
+  enemies: []

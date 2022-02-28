@@ -25,13 +25,12 @@ public class TowerBase : MonoBehaviour
     private bool isBought = false;  // isActive
     private bool canAttack = false;
 
-    [Header("Tower stats")]
+    [Header("Tower stats (also look at other scripts!)")]
     [SerializeField] private int towerCost;
-    [SerializeField] private float baseDamage;
-    private float damage;                           // extra damage variable because of variable damage in abilities
+    //damage - to TowerAttackController
     [SerializeField] private float attackCooldown;
     private float currentCooldown;
-    [SerializeField] private float range;           // enum (scriptable object) for short/medium/long?
+    //range - to TowerEnemyChecker
 
 
 
@@ -46,26 +45,56 @@ public class TowerBase : MonoBehaviour
             Debug.LogError("Tappable component not found, attach one!");
         }
 
-        
+        gotChecker = TryGetComponent<TowerEnemyChecker>(out enemyChecker);
+
+        if (gotChecker == false)
+        {
+            Debug.LogError("TowerEnemyChecker component not found, attach one!");
+        }
+
+        gotAttacker = TryGetComponent<TowerAttackController>(out attackController);
+
+        if (gotAttacker == false)
+        {
+            Debug.LogError("TowerAttackController component not found, attach one!");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         // TODO: check if a conditional to tap detection is necessary
-        // bool moment = 
-        tappable.DetectTaps();
+        bool isTapped = tappable.DetectTaps();
 
+        if (isBought == false)
+        {
+            if (isTapped)
+            {
+                // pop up (or activate) UI button(s) to enable buying
+            }
+        }
 
-        if (isBought)
+        else //if (isBought)
         {
             // also check for suitable conditionals, related to being visible
             canAttack = incrementAndCheckCooldown();
-        }
-        
-        if (canAttack)
-        {
-            //attackController.CreateAttack();
+
+            enemyChecker.CheckForEnemiesInRange();
+
+            if (canAttack)
+            {
+                // AoE version
+                foreach (EnemyBase enemy in enemyChecker.detectedEnemies)
+                {
+                    attackController.PerformAttack(enemy);
+                }
+
+                // for single projectile version, PerformAttack(detectedEnemies(0)) outside of foreach
+
+                canAttack = false;  // just in case
+            }
+
+            // still detect taps for UI buttons, for selling/upgrading?
         }
     }
 

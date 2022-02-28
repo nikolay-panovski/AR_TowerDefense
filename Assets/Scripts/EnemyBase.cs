@@ -99,6 +99,12 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float dmg)
+    {
+        hp -= dmg;  // most basic form, no modifiers into account ever
+        Debug.Log("An enemy has been damaged. Enemy HP now: " + hp);
+    }
+
     private void OnDestroy()
     {
         // any subscribers in the chat
