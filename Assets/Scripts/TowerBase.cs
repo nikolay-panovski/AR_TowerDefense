@@ -22,7 +22,7 @@ public class TowerBase : MonoBehaviour
 
     private Tappable tappable;
 
-    private bool isBought = false;  // isActive
+    private bool isBought = true;  // isActive
     private bool canAttack = false;
 
     [Header("Tower stats (also look at other scripts!)")]
@@ -79,10 +79,11 @@ public class TowerBase : MonoBehaviour
             // also check for suitable conditionals, related to being visible
             canAttack = incrementAndCheckCooldown();
 
-            enemyChecker.CheckForEnemiesInRange();
-
             if (canAttack)
             {
+                enemyChecker.CheckForEnemiesInRange();
+
+                Debug.Log("Number of enemies found in range: " + enemyChecker.detectedEnemies.Count);
                 // AoE version
                 foreach (EnemyBase enemy in enemyChecker.detectedEnemies)
                 {
@@ -109,5 +110,12 @@ public class TowerBase : MonoBehaviour
         }
 
         return false;
+    }
+
+    // debug for tower range
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1, 1, 1, 0.5f);
+        Gizmos.DrawSphere(transform.position, enemyChecker.range);
     }
 }

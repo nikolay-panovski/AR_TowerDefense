@@ -10,10 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyPathfindController))]
 public class EnemyBase : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
-
-    [Tooltip("Once an enemy is this close to its active waypoint, it will update and start moving to the next one. Same value for all enemies, set this in the FloatValue.")]
-    [SerializeField] private FloatValue minDistToWaypoint;
+    [SerializeField] private GameManager gameManager;   // not the most optimal anymore ngl ... but good practice for SA
 
     [Header("Enemy stats")]
     [SerializeField] private float maxHP;
@@ -48,25 +45,33 @@ public class EnemyBase : MonoBehaviour
             //moveController.SetDestination(pathfindController.GetActiveWaypoint().GetPosition());      // activeWP starts as null
             // if activeWP is null at start and there are still no waypoints, then one gets added to [], set activeWP to that?
         }
+
+        else
+        {
+            foreach (TestWaypoint wp in FindObjectsOfType<TestWaypoint>(false))
+            {
+                pathfindController.AddWaypointToList(wp);
+            }
+            pathfindController.SetFirstActiveWaypoint();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.isWaveActive.value == true)
-        {
-            Waypoint activeWP = pathfindController.GetActiveWaypoint();
+        
+            TestWaypoint activeWP = pathfindController.GetActiveTestWaypoint();
             if (activeWP != null)
             {
                 moveController.SetDestination(activeWP.GetPosition());
                 Vector3 distVec;
                 moveController.MoveTowardsDestination(speed, out distVec);
 
-                if (distVec.magnitude < minDistToWaypoint.value)
+                if (distVec.magnitude < gameManager.minDistToWaypoint.value)
                 {
-                    hasReachedGoal = !pathfindController.SetActiveWaypoint();
+                    hasReachedGoal = !pathfindController.TestSetActiveWaypoint();
                     // **if the enemy path does not change on card move or seems broken, then we'd need to set the destination constantly in Update()
-                    moveController.SetDestination(pathfindController.GetActiveWaypoint().GetPosition());
+                    if (hasReachedGoal == false) moveController.SetDestination(pathfindController.GetActiveTestWaypoint().GetPosition());
                 }
             }
 
@@ -75,7 +80,6 @@ public class EnemyBase : MonoBehaviour
                 // ~~except that if this happens, we'd need an error message for the user who did not snapshot waypoints
                 Debug.LogError("No active Waypoints were found. Did you get any rendered from the ImageTargets/cards?");
             }
-        }
         
         
 
