@@ -8,20 +8,16 @@ public class GameManager : ScriptableObject
 {
     public IntValue playerHP;
     public IntValue playerMoney;
-    public BoolValue isWaveActive;
-    //public IntValue timeBetweenWaves;
+
+    [Tooltip("Once an enemy is this close to its active waypoint, it will update and start moving to the next one. Same value for all enemies, set this in the FloatValue.")]
+    public FloatValue minDistToWaypoint;
+
     public System.Random random { get; } = new System.Random();
 
     public enum Modification
     {
         INCREASE,
         DECREASE
-    }
-
-    public void SetWaveToActive()
-    {
-        isWaveActive.value = true;
-        Debug.Log("Wave is active? " + isWaveActive.value);
     }
 
     public void ModifyPlayerValue(IntValue value, Modification modification, int byValue)

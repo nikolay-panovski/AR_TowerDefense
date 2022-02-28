@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4110172754684734e98140ec95ceb1cc, type: 3}
   m_Name: GameManagerObject
   m_EditorClassIdentifier: 
-  playerHP: {fileID: 0}
-  playerMoney: {fileID: 0}
-  isWaveActive: {fileID: 11400000, guid: 843c1d570a7679043b1b84e9dd0e653d, type: 2}
+  playerHP: {fileID: 11400000, guid: f5be92a2897fd914e9e88e9bf56ee76f, type: 2}
+  playerMoney: {fileID: 11400000, guid: 7b817829101255f4c9d2d63a7ac62eb4, type: 2}
+  minDistToWaypoint: {fileID: 11400000, guid: 1ae39202cf578124097e853030b0777b, type: 2}

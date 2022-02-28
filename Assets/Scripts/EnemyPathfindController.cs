@@ -6,7 +6,9 @@ public class EnemyPathfindController : MonoBehaviour
     // Physical cards CAN be moved and this should already update the enemy path, because it is based on the contained Waypoints' transform positions.
 
     private Waypoint[] waypointManager = new Waypoint[10];
+    private TestWaypoint[] testWaypointManager = new TestWaypoint[10];
     private Waypoint activeWaypoint = null;     // the waypoint the enemy immediately walks to next
+    private TestWaypoint testActiveWaypoint = null;
 
     //public delegate void PathfinderReadyEvent(int id);
     //public event PathfinderReadyEvent OnPathfinderReady;
@@ -20,15 +22,51 @@ public class EnemyPathfindController : MonoBehaviour
     {
         if (waypointManager[wp.orderID] == null)
         {
-            // for now at least: add waypoint only if it is not already located (is NULL)
+            // add waypoint only if it is not already located (is NULL)
             waypointManager[wp.orderID] = wp;
-            Debug.Log("Waypoint with ID " + wp.orderID + " added to controller list");
+            //Debug.Log("Waypoint with ID " + wp.orderID + " added to controller list");
+        }
+    }
+
+    public void AddWaypointToList(TestWaypoint wp)
+    {
+        if (testWaypointManager[wp.orderID] == null)
+        {
+            // I hope it's readable that this is a TEST METHOD (for the no AR)
+            testWaypointManager[wp.orderID] = wp;
+            //Debug.Log("TestWaypoint with ID " + wp.orderID + " added to controller list");
         }
     }
 
     public Waypoint GetActiveWaypoint()
     {
         return activeWaypoint;
+    }
+
+    public TestWaypoint GetActiveTestWaypoint()
+    {
+        return testActiveWaypoint;
+    }
+
+    // for TEST only, but will probably need the same thing for the first WP of the real one
+    // "unsafe" so no information except the log returned if it fails.
+    public void SetFirstActiveWaypoint()
+    {
+        int i = 0;
+        do
+        {
+            testActiveWaypoint = testWaypointManager[i];
+            i++;
+
+            // break check after hitting the end of the array and revert to the original waypoint
+            if (i >= testWaypointManager.Length)
+            {
+                Debug.LogError("There are no active TestWaypoints at all! Add some to the scene and put their IDs between 0 and 9!");
+                break;
+            }
+        } while (testActiveWaypoint == null);
+
+        //Debug.Log("First active waypoint has ID: " + testActiveWaypoint.orderID);
     }
 
     /// <summary>
@@ -40,22 +78,49 @@ public class EnemyPathfindController : MonoBehaviour
     /// </returns>
     public bool SetActiveWaypoint()
     {
-        Waypoint ogWP = activeWaypoint;
+        Waypoint nextWP = activeWaypoint;
 
         int i = 1;
         do
         {
-            activeWaypoint = waypointManager[activeWaypoint.orderID + i];
-            i++;
-
-            // break check after hitting the end of the array and revert to the original waypoint
+            /**/
             if (activeWaypoint.orderID + i >= waypointManager.Length)
             {
-                activeWaypoint = ogWP;
                 return false;
             }
-        } while (activeWaypoint == null);
+            /**/
 
+            nextWP = waypointManager[activeWaypoint.orderID + i];
+            i++;
+
+        } while (nextWP == null);
+
+        activeWaypoint = nextWP;
+        return true;
+    }
+
+    public bool TestSetActiveWaypoint()
+    {
+        TestWaypoint nextWP = testActiveWaypoint;
+
+        int i = 1;
+        do
+        {
+            /**/
+            // break check after hitting the end of the array and do not set waypoint
+            if (testActiveWaypoint.orderID + i >= testWaypointManager.Length)
+            {
+                return false;
+            }
+            /**/
+
+            nextWP = testWaypointManager[testActiveWaypoint.orderID + i];
+            i++;
+
+        } while (nextWP == null);
+
+        testActiveWaypoint = nextWP;
+        //Debug.Log("Next active waypoint has ID: " + testActiveWaypoint.orderID);
         return true;
     }
 }

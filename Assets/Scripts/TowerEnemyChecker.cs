@@ -6,7 +6,7 @@ public class TowerEnemyChecker : MonoBehaviour
     [SerializeField] private EnemyManager enemyManager;
     public List<EnemyBase> detectedEnemies { get; private set; }
 
-    [SerializeField] private float range;           // enum (scriptable object) for short/medium/long?
+    [field: SerializeField] public float range { get; private set; }           // enum (scriptable object) for short/medium/long?
 
     // Start is called before the first frame update
     void Start()
@@ -18,9 +18,12 @@ public class TowerEnemyChecker : MonoBehaviour
     {
         detectedEnemies.Clear();
 
-        foreach (EnemyBase enemy in enemyManager.GetCurrentWave().enemies)
+        // top foreach does not work. apparently basing it on a ScriptableObject list does not allow for the proper references
+        //foreach (EnemyBase enemy in enemyManager.GetCurrentWave().enemies)
+        foreach (EnemyBase enemy in enemyManager.GetComponentsInChildren<EnemyBase>())
         {
-            if (Vector3.Distance(this.transform.position, enemy.transform.position) <= range)
+            float dist = Vector3.Distance(this.transform.position, enemy.transform.position);
+            if (dist <= range)
             {
                 detectedEnemies.Add(enemy);
             }
