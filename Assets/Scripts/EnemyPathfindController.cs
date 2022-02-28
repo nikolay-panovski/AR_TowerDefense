@@ -6,6 +6,7 @@ public class EnemyPathfindController : MonoBehaviour
     // Physical cards CAN be moved and this should already update the enemy path, because it is based on the contained Waypoints' transform positions.
 
     private Waypoint[] waypointManager = new Waypoint[10];
+    private TestWaypoint[] testWaypointManager = new TestWaypoint[10];
     private Waypoint activeWaypoint = null;     // the waypoint the enemy immediately walks to next
 
     //public delegate void PathfinderReadyEvent(int id);
@@ -23,6 +24,16 @@ public class EnemyPathfindController : MonoBehaviour
             // for now at least: add waypoint only if it is not already located (is NULL)
             waypointManager[wp.orderID] = wp;
             Debug.Log("Waypoint with ID " + wp.orderID + " added to controller list");
+        }
+    }
+
+    public void TestAddWaypointToList(TestWaypoint wp)
+    {
+        if (testWaypointManager[wp.orderID] == null)
+        {
+            // I hope it's readable that this is a TEST METHOD (for the no AR)
+            testWaypointManager[wp.orderID] = wp;
+            Debug.Log("TestWaypoint with ID " + wp.orderID + " added to controller list");
         }
     }
 
