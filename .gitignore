@@ -46,6 +46,10 @@ AreaTarget/
 *BackUpThisFolder*/
 *BurstDebugInformation*/
 
+# I don't know if this is fine or the ignore would help but I got tired of these two
+EditorBuildSettings.asset
+EditorUserSettings.asset
+
 # End Custom ignores
 
 
@@ -179,7 +183,12 @@ StyleCopReport.xml
 *_p.c
 *_h.h
 *.ilk
-*.meta
+
+# BUT this makes the unity .meta files be ignored!
+# Unignore those to *hopefully* avoid broken references
+# *.meta
+# 
+
 *.obj
 *.iobj
 *.pch
