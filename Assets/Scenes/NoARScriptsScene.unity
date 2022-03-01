@@ -158,6 +158,7 @@ Transform:
   - {fileID: 596023536}
   - {fileID: 1170717892}
   - {fileID: 2042645343}
+  - {fileID: 1732136638}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2373,13 +2374,14 @@ GameObject:
   - component: {fileID: 1581933707}
   - component: {fileID: 1581933706}
   - component: {fileID: 1581933705}
+  - component: {fileID: 1581933708}
   m_Layer: 5
   m_Name: Sell Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1581933704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2444,7 +2446,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1581933706}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1581933708}
+        m_TargetAssemblyTypeName: UI_TowerTradeButton, Assembly-CSharp
+        m_MethodName: TryMakeTransaction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1581933706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2483,6 +2497,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1581933703}
   m_CullTransparentMesh: 1
+--- !u!114 &1581933708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581933703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f3651e7e3e9ad4c86f6e7617b77474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 11400000, guid: 9ccb834f2d37bdb4d9ee4feccf96648f, type: 2}
 --- !u!1 &1610182448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2846,7 +2873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1674833638
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2949,6 +2976,168 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674833637}
   m_CullTransparentMesh: 1
+--- !u!1001 &1732136637
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 21468935}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.815
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.523
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+        type: 3}
+      propertyPath: m_Name
+      value: GatlingGun (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e9764fa42f85854f9cfe9140f44aceb, type: 3}
+--- !u!4 &1732136638 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1732136637}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1732136639 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e9764fa42f85854f9cfe9140f44aceb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1732136637}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1732136640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732136639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79fb4b890bcfdbd488bb77de64600a20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1732136641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732136639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f404fe9d3df964d95d19c81d7f6cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1732136642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732136639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83470c4fbaa13cf43b217d081c7a6590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyManager: {fileID: 1628957804}
+  <range>k__BackingField: 0.25
+--- !u!114 &1732136643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732136639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f206504c1a46604287ef523923b200d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDamage: 50
+--- !u!114 &1732136644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732136639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf35f4e1622695d41bbde74b3fc64eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 11400000, guid: 9ccb834f2d37bdb4d9ee4feccf96648f, type: 2}
+  UIButtonObject: {fileID: 1581933703}
+  isBought: 0
+  attackCooldown: 1
+  <towerCost>k__BackingField: 200
+--- !u!65 &1732136645
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732136639}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.124822, y: 0.09452957, z: 0.11080122}
+  m_Center: {x: 0.020770323, y: 0.048869133, z: 0.011288226}
 --- !u!1 &1737348493
 GameObject:
   m_ObjectHideFlags: 0
@@ -3086,7 +3275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1841548683
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3115,7 +3304,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841548682}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba3027f0dbb67244fb2bf1d4865c867e, type: 3}
   m_Name: 
@@ -3423,8 +3612,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 11400000, guid: 9ccb834f2d37bdb4d9ee4feccf96648f, type: 2}
-  towerCost: 100
+  UIButtonObject: {fileID: 1581933703}
+  isBought: 0
   attackCooldown: 1
+  <towerCost>k__BackingField: 150
 --- !u!114 &2076002511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3464,6 +3655,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f404fe9d3df964d95d19c81d7f6cee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2076002514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076002509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79fb4b890bcfdbd488bb77de64600a20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &2076002515
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076002509}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.124822, y: 0.09452957, z: 0.11080122}
+  m_Center: {x: 0.020770323, y: 0.048869133, z: 0.011288226}
 --- !u!1 &2117279817
 GameObject:
   m_ObjectHideFlags: 0

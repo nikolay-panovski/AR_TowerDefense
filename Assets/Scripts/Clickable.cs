@@ -10,8 +10,15 @@ public class Clickable : MonoBehaviour
         mainCamera = Camera.main;
     }
 
+    private void Update()
+    {
+        //isClicked = false;
+    }
+
     private void OnMouseDown()
     {
+        Debug.Log("Screen clicked at " + Input.mousePosition);
+
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -24,6 +31,11 @@ public class Clickable : MonoBehaviour
             }
         }
 
-        isClicked = false;
+        else
+        {
+            isClicked = false;
+        }
+
+        Debug.Log("isClicked: " + isClicked);
     }
 }

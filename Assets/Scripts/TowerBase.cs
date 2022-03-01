@@ -25,16 +25,16 @@ public class TowerBase : MonoBehaviour
     private Clickable clickable;
     private Tappable tappable;
 
-    private bool isBought = true;  // isActive
+    // TODO: "wasBoughtLastFrame"  (most graceful currently possible link with the UI button)
+    public bool isBought = false;  // isActive
     private bool canAttack = false;
 
     [Header("Tower stats (also look at other scripts!)")]
-    [SerializeField] private int towerCost;
-    //damage - to TowerAttackController
     [SerializeField] private float attackCooldown;
     private float currentCooldown;
+    [field: SerializeField] public int towerCost { get; private set; }
+    //damage - to TowerAttackController
     //range - to TowerEnemyChecker
-
 
 
     // Start is called before the first frame update
@@ -81,6 +81,7 @@ public class TowerBase : MonoBehaviour
             if (clickable.isClicked)
             //if (isTapped)
             {
+                UIButtonObject.GetComponent<UI_TowerTradeButton>().callingTowerBase = this;
                 UIButtonObject.SetActive(true);
             }
             else
@@ -94,7 +95,7 @@ public class TowerBase : MonoBehaviour
             if (clickable.isClicked)
             //if (isTapped)
             {
-                // pop up (or activate) UI button(s) to enable buying
+                UIButtonObject.GetComponent<UI_TowerTradeButton>().callingTowerBase = this;
                 UIButtonObject.SetActive(true);
             }
 
