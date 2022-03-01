@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -183,8 +183,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Scrap
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01a1531cc265cda468e7fa40410965df, type: 2}
-  m_sharedMaterial: {fileID: -6196701442168790723, guid: 01a1531cc265cda468e7fa40410965df,
+  m_fontAsset: {fileID: 11400000, guid: d21424831c9848e4d8200a9e062f792e, type: 2}
+  m_sharedMaterial: {fileID: -6196701442168790723, guid: d21424831c9848e4d8200a9e062f792e,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -403,7 +403,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 711744079}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e98a36e3a12687499277bcf11668e96, type: 3}
+  m_Script: {fileID: 11500000, guid: 90b3102af5d9e484e8f06b5d3c67503c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   home: UIHome
@@ -751,6 +751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2018014065}
   - component: {fileID: 2018014064}
+  - component: {fileID: 2018014066}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -835,6 +836,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &2018014066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018014063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &2043769218
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,8 +916,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tutorial
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01a1531cc265cda468e7fa40410965df, type: 2}
-  m_sharedMaterial: {fileID: -6196701442168790723, guid: 01a1531cc265cda468e7fa40410965df,
+  m_fontAsset: {fileID: 11400000, guid: d21424831c9848e4d8200a9e062f792e, type: 2}
+  m_sharedMaterial: {fileID: -6196701442168790723, guid: d21424831c9848e4d8200a9e062f792e,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1031,8 +1052,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01a1531cc265cda468e7fa40410965df, type: 2}
-  m_sharedMaterial: {fileID: -6196701442168790723, guid: 01a1531cc265cda468e7fa40410965df,
+  m_fontAsset: {fileID: 11400000, guid: d21424831c9848e4d8200a9e062f792e, type: 2}
+  m_sharedMaterial: {fileID: -6196701442168790723, guid: d21424831c9848e4d8200a9e062f792e,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1251,7 +1272,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2142126180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e98a36e3a12687499277bcf11668e96, type: 3}
+  m_Script: {fileID: 11500000, guid: 90b3102af5d9e484e8f06b5d3c67503c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   home: UIHome

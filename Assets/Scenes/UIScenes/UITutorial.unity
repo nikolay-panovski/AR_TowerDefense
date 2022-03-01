@@ -248,7 +248,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 11f6b30f64538294582982e9da22e7b6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9c08b157343cd8840aed1d8922bb4c51, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -326,16 +326,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: Back
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01a1531cc265cda468e7fa40410965df, type: 2}
-  m_sharedMaterial: {fileID: -6196701442168790723, guid: 01a1531cc265cda468e7fa40410965df,
+  m_fontAsset: {fileID: 11400000, guid: d21424831c9848e4d8200a9e062f792e, type: 2}
+  m_sharedMaterial: {fileID: -6196701442168790723, guid: d21424831c9848e4d8200a9e062f792e,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -452,7 +452,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 667523392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e98a36e3a12687499277bcf11668e96, type: 3}
+  m_Script: {fileID: 11500000, guid: 90b3102af5d9e484e8f06b5d3c67503c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   home: UIHome
