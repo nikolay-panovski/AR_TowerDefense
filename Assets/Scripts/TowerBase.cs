@@ -11,15 +11,18 @@ using UnityEngine;
 // AttackType must be changeable/flexible, as some ideas include chain of proj->AoE, or ability temp switching from proj to AoE
 // Attack ->
 
+[RequireComponent(typeof(Clickable))]        // TEMP -- NO AR
 [RequireComponent(typeof(Tappable))]
 [RequireComponent(typeof(TowerEnemyChecker))]
 [RequireComponent(typeof(TowerAttackController))]
 public class TowerBase : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private GameObject UIButtonObject;
     private /*IEnemyChecker*/ TowerEnemyChecker enemyChecker;
     private /*IAttackController*/ TowerAttackController attackController;
 
+    private Clickable clickable;
     private Tappable tappable;
 
     private bool isBought = true;  // isActive
@@ -37,7 +40,14 @@ public class TowerBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bool gotTappable, gotChecker, gotAttacker;
+        bool gotClickable, gotTappable, gotChecker, gotAttacker;
+        gotClickable = TryGetComponent<Clickable>(out clickable);
+
+        if (gotClickable == false)
+        {
+            Debug.LogError("Clickable component not found, attach one!");
+        }
+
         gotTappable = TryGetComponent<Tappable>(out tappable);
 
         if (gotTappable == false)
@@ -68,14 +78,31 @@ public class TowerBase : MonoBehaviour
 
         if (isBought == false)
         {
-            if (isTapped)
+            if (clickable.isClicked)
+            //if (isTapped)
             {
-                // pop up (or activate) UI button(s) to enable buying
+                UIButtonObject.SetActive(true);
+            }
+            else
+            {
+                UIButtonObject.SetActive(false);
             }
         }
 
         else //if (isBought)
         {
+            if (clickable.isClicked)
+            //if (isTapped)
+            {
+                // pop up (or activate) UI button(s) to enable buying
+                UIButtonObject.SetActive(true);
+            }
+
+            else
+            {
+                UIButtonObject.SetActive(false);
+            }
+
             // also check for suitable conditionals, related to being visible
             canAttack = incrementAndCheckCooldown();
 
@@ -83,7 +110,6 @@ public class TowerBase : MonoBehaviour
             {
                 enemyChecker.CheckForEnemiesInRange();
 
-                Debug.Log("Number of enemies found in range: " + enemyChecker.detectedEnemies.Count);
                 // AoE version
                 foreach (EnemyBase enemy in enemyChecker.detectedEnemies)
                 {

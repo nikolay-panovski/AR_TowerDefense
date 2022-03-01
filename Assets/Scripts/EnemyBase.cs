@@ -59,29 +59,28 @@ public class EnemyBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-            TestWaypoint activeWP = pathfindController.GetActiveTestWaypoint();
-            if (activeWP != null)
-            {
-                moveController.SetDestination(activeWP.GetPosition());
-                Vector3 distVec;
-                moveController.MoveTowardsDestination(speed, out distVec);
+        TestWaypoint activeWP = pathfindController.GetActiveTestWaypoint();
+        if (activeWP != null)
+        {
+            moveController.SetDestination(activeWP.GetPosition());
+            Vector3 distVec;
+            moveController.MoveTowardsDestination(speed, out distVec);
 
-                if (distVec.magnitude < gameManager.minDistToWaypoint.value)
-                {
-                    hasReachedGoal = !pathfindController.TestSetActiveWaypoint();
-                    // **if the enemy path does not change on card move or seems broken, then we'd need to set the destination constantly in Update()
-                    if (hasReachedGoal == false) moveController.SetDestination(pathfindController.GetActiveTestWaypoint().GetPosition());
-                }
+            if (distVec.magnitude < gameManager.minDistToWaypoint.value)
+            {
+                hasReachedGoal = !pathfindController.TestSetActiveWaypoint();
+                // **if the enemy path does not change on card move or seems broken, then we'd need to set the destination constantly in Update()
+                if (hasReachedGoal == false) moveController.SetDestination(pathfindController.GetActiveTestWaypoint().GetPosition());
             }
 
-            else
-            {
-                // ~~except that if this happens, we'd need an error message for the user who did not snapshot waypoints
-                Debug.LogError("No active Waypoints were found. Did you get any rendered from the ImageTargets/cards?");
-            }
-        
-        
+            // TODO: update enemy rotation (lookat towards waypoint)
+        }
+
+        else
+        {
+            // ~~except that if this happens, we'd need an error message for the user who did not snapshot waypoints
+            Debug.LogError("No active Waypoints were found. Did you get any rendered from the ImageTargets/cards?");
+        }
 
         if (hasReachedGoal)
         {

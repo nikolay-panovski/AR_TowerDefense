@@ -4,17 +4,17 @@ using UnityEngine;
 // Hold Lists of enemies, modifiable outside in Editor
 public class EnemyManager : MonoBehaviour
 {
-    // might need to send isWaveActive back to gameManager for consistency
+    // sent isWaveActive back to gameManager for consistency
     [SerializeField] private GameManager gameManager;
 
-    [SerializeField] private FloatValue timeBetweenWaves;
-    private float currentTimeBetweenWaves;
+    
+    public FloatValue currentTimeBetweenWaves;
     [SerializeField] private FloatValue timeBetweenEnemies;
     private float currentSpawnCooldown;
-    public BoolValue isWaveActive;
+    
 
     public List<EnemyWave> enemyWaves;
-    private EnemyWave currentWave = null;
+    public EnemyWave currentWave { get; private set; } = null;
     private EnemyBase currentEnemy = null;
     //private int currentWaveIndex;
     private int currentEnemyIndex;
@@ -31,45 +31,41 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         // step 1: wave gets activated via timer
-        // TODO: hook timer to UI and display it for information
-        if (isWaveActive.value == false)
+        // TODO: also assert that wave is not (past) last wave
+        if (gameManager.isGameBeaten.value == false && gameManager.isWaveActive.value == false)
         {
-            isWaveActive.value = incrementAndCheckCooldown(ref currentTimeBetweenWaves, timeBetweenWaves.value);
+            gameManager.isWaveActive.value = incrementAndCheckCooldown(ref currentTimeBetweenWaves.value, gameManager.timeBetweenWaves.value);
         }
 
         // step 2: now that wave is active, start spawning on timer, until there are no enemies left
-        if (isWaveActive.value == true)
+        if (gameManager.isWaveActive.value == true)
         {
             if (canSpawn)
             {
-                spawnEnemy(currentEnemy);
+                if (currentEnemyIndex < currentWave.enemies.Count)
+                {
+                    spawnEnemy(currentEnemy);
+                    Debug.Log("Spawned enemy " + currentEnemy + "from wave " + enemyWaves.IndexOf(currentWave) +
+                                ", enemy index " + currentEnemyIndex);
 
-                currentEnemyIndex++;
+                    currentEnemyIndex++;
+                }
+
                 if (currentEnemyIndex >= currentWave.enemies.Count)
                 {
                     // initiate constant checking whether all enemies' GameObjects are destroyed
-                    // THIS LOOP DOES FREEZE GAME! (especially when nothing is able to kill the enemies)
-                    /**
-                    while (true)
+                    // might become heavy... but it works...
+                    foreach (EnemyBase enemy in GetComponentsInChildren<EnemyBase>())
                     {
-                        EnemyBase remainingEnemy = null;
-
-                        foreach (EnemyBase enemy in currentWave.enemies)
+                        if (enemy != null)
                         {
-                            if (enemy != null)
-                            {
-                                remainingEnemy = enemy;
-                                break;
-                            }
+                            return;
                         }
-
-                        if (remainingEnemy == null) break;
-                        //else Debug.Log("Still enemies left alive!");
                     }
-                    /**/
 
-                    // ~step 3: deactivate wave, prepare next wave for active, return to step 1
-                    isWaveActive.value = false;
+                    // ~step 3: all enemies destroyed, deactivate wave, prepare next wave for active, return to step 1
+                    gameManager.isWaveActive.value = false;
+                    currentEnemyIndex = 0;
                     Debug.Log("All enemies for this wave spawned, now wave is inactive!");
 
                     // ~~waves should all be unique, but if they are not, use the other int for an index
@@ -77,6 +73,8 @@ public class EnemyManager : MonoBehaviour
                     if (nextWaveIndex >= enemyWaves.Count)
                     {
                         // final: all waves cleared
+                        // instead of Debug.Log, trigger a game win clause (screen?) and close wave spawning
+                        gameManager.isGameBeaten.value = true;
                         Debug.Log("All enemies were spawned and cleared, Game Win!");
                     }
                     else
