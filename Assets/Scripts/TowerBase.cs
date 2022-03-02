@@ -19,14 +19,18 @@ public class TowerBase : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GameObject UIButtonObject;
+    private UI_TowerTradeButton UIButtonScript;
+    private Renderer[] towerPartsRenderers;
     private /*IEnemyChecker*/ TowerEnemyChecker enemyChecker;
     private /*IAttackController*/ TowerAttackController attackController;
+
+    [SerializeField] private TextureContainer texture;
 
     private Clickable clickable;
     private Tappable tappable;
 
-    // TODO: "wasBoughtLastFrame"  (most graceful currently possible link with the UI button)
     public bool isBought = false;  // isActive
+    private bool wasBoughtLastFrame;
     private bool canAttack = false;
 
     [Header("Tower stats (also look at other scripts!)")]
@@ -40,6 +44,10 @@ public class TowerBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UIButtonScript = UIButtonObject.GetComponent<UI_TowerTradeButton>();
+        towerPartsRenderers = GetComponentsInChildren<Renderer>();
+
+        /**/
         bool gotClickable, gotTappable, gotChecker, gotAttacker;
         gotClickable = TryGetComponent<Clickable>(out clickable);
 
@@ -68,6 +76,11 @@ public class TowerBase : MonoBehaviour
         {
             Debug.LogError("TowerAttackController component not found, attach one!");
         }
+        /**/
+        foreach (Renderer renderer in towerPartsRenderers)
+        {
+            renderer.material.SetTexture("_BaseMap", null);
+        }
     }
 
     // Update is called once per frame
@@ -81,12 +94,17 @@ public class TowerBase : MonoBehaviour
             if (clickable.isClicked)
             //if (isTapped)
             {
-                UIButtonObject.GetComponent<UI_TowerTradeButton>().callingTowerBase = this;
+                UIButtonObject.SetActive(false);
+                UIButtonScript.callingTowerBase = this;
                 UIButtonObject.SetActive(true);
             }
-            else
+
+            if (wasBoughtLastFrame != isBought)
             {
-                UIButtonObject.SetActive(false);
+                foreach (Renderer renderer in towerPartsRenderers)
+                {
+                    renderer.material.SetTexture("_BaseMap", null);
+                }
             }
         }
 
@@ -95,13 +113,17 @@ public class TowerBase : MonoBehaviour
             if (clickable.isClicked)
             //if (isTapped)
             {
-                UIButtonObject.GetComponent<UI_TowerTradeButton>().callingTowerBase = this;
+                UIButtonObject.SetActive(false);
+                UIButtonScript.callingTowerBase = this;
                 UIButtonObject.SetActive(true);
             }
 
-            else
+            if (wasBoughtLastFrame != isBought)
             {
-                UIButtonObject.SetActive(false);
+                foreach (Renderer renderer in towerPartsRenderers)
+                {
+                    renderer.material.SetTexture("_BaseMap", texture.cachedTexture);
+                }
             }
 
             // also check for suitable conditionals, related to being visible
@@ -121,9 +143,9 @@ public class TowerBase : MonoBehaviour
 
                 canAttack = false;  // just in case
             }
-
-            // still detect taps for UI buttons, for selling/upgrading?
         }
+
+        wasBoughtLastFrame = isBought;
     }
 
     private bool incrementAndCheckCooldown()
@@ -142,7 +164,10 @@ public class TowerBase : MonoBehaviour
     // debug for tower range
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = new Color(1, 1, 1, 0.5f);
-        Gizmos.DrawSphere(transform.position, enemyChecker.range);
+        if (enemyChecker != null)
+        {
+            Gizmos.color = new Color(1, 1, 1, 0.5f);
+            Gizmos.DrawSphere(transform.position, enemyChecker.range);
+        }
     }
 }

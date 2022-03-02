@@ -12,30 +12,29 @@ public class Clickable : MonoBehaviour
 
     private void Update()
     {
-        //isClicked = false;
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject g = hit.collider.gameObject;
+                if (g == this.gameObject)
+                {
+                    isClicked = true;
+                }
+            }
+
+            else
+            {
+                isClicked = false;
+            }
+        }
     }
 
     private void OnMouseDown()
     {
-        Debug.Log("Screen clicked at " + Input.mousePosition);
-
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            GameObject g = hit.collider.gameObject;
-            if (g == this.gameObject)
-            {
-                isClicked = true;
-            }
-        }
-
-        else
-        {
-            isClicked = false;
-        }
-
-        Debug.Log("isClicked: " + isClicked);
+        
     }
 }
