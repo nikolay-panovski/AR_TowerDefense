@@ -48,8 +48,6 @@ public class UI_TowerTradeButton : MonoBehaviour
                 gameManager.ModifyPlayerValue(gameManager.playerMoney, GameManager.Modification.DECREASE, callingTowerCost);
                 callingTowerBase.isBought = true;
 
-                // TODO: send some signal back to tower to change its state (material or model)
-
                 gameObject.SetActive(false);
             }
         }
@@ -59,8 +57,6 @@ public class UI_TowerTradeButton : MonoBehaviour
             // tower bought, try to sell
             gameManager.ModifyPlayerValue(gameManager.playerMoney, GameManager.Modification.INCREASE, callingTowerCost);
             callingTowerBase.isBought = false;
-
-            // TODO: send some signal back to tower to change its state (material or model)
 
             gameObject.SetActive(false);
         }
