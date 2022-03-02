@@ -14,6 +14,7 @@ public class EnemyAutoMoveController : MonoBehaviour
     public void MoveTowardsDestination(float speed, out Vector3 distVec)
     {
         distVec = destination - this.transform/*.parent*/.position; // parent when (at least trying with) ImageTarget, else self (more logical)
+
         Vector3 distVecAdjust = Vector3.Normalize(distVec);
         distVecAdjust *= SPEED_ADJUST_MULT;
 

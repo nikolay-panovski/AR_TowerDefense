@@ -45,8 +45,6 @@ public class EnemyManager : MonoBehaviour
                 if (currentEnemyIndex < currentWave.enemies.Count)
                 {
                     spawnEnemy(currentEnemy);
-                    Debug.Log("Spawned enemy " + currentEnemy + "from wave " + enemyWaves.IndexOf(currentWave) +
-                                ", enemy index " + currentEnemyIndex);
 
                     currentEnemyIndex++;
                 }

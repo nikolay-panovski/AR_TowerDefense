@@ -73,7 +73,9 @@ public class EnemyBase : MonoBehaviour
                 if (hasReachedGoal == false) moveController.SetDestination(pathfindController.GetActiveTestWaypoint().GetPosition());
             }
 
-            // TODO: update enemy rotation (lookat towards waypoint)
+            // base the tower rotation on this
+            this.transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                Quaternion.LookRotation((activeWP.transform.position - transform.position).normalized), 0.25f);
         }
 
         else
@@ -85,8 +87,6 @@ public class EnemyBase : MonoBehaviour
         if (hasReachedGoal)
         {
             gameManager.ModifyPlayerValue(gameManager.playerHP, GameManager.Modification.DECREASE, damageToGoal);
-            Debug.Log("An enemy has reached the goal. Goal HP will decrease.");
-            Debug.Log("Player HP is now: " + gameManager.playerHP.value);
             Destroy(gameObject);
         }
 
@@ -96,8 +96,6 @@ public class EnemyBase : MonoBehaviour
         {
             gameManager.ModifyPlayerValue(gameManager.playerMoney, GameManager.Modification.INCREASE, 
                 gameManager.random.Next(minScrapOnDeath, maxScrapOnDeath + 1));
-            Debug.Log("An enemy has been killed. Player Money will increase.");
-            Debug.Log("Player Money is now: " + gameManager.playerMoney.value);
             Destroy(gameObject);
         }
     }
@@ -105,11 +103,5 @@ public class EnemyBase : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         hp -= dmg;  // most basic form, no modifiers into account ever
-        Debug.Log("An enemy has been damaged. Enemy HP now: " + hp);
-    }
-
-    private void OnDestroy()
-    {
-        // any subscribers in the chat
     }
 }

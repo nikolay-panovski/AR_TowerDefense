@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c89ecebfdf43946b2d7e4ffcd6ecb8, type: 3}
   m_Name: MinEnemyDistToWaypoint
   m_EditorClassIdentifier: 
-  value: 0.125
+  value: 0.0625
