@@ -50,6 +50,10 @@ AreaTarget/
 EditorBuildSettings.asset
 EditorUserSettings.asset
 
+# a VFX package folder
+Assets/Mirza Beig/
+Assets/Mirza Beig.meta
+
 # End Custom ignores
 
 
@@ -511,3 +515,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+# ...and the meta from that VFX package
+Assets/Mirza Beig.meta
