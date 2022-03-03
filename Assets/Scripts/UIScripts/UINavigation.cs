@@ -29,4 +29,9 @@ public class UINavigation : MonoBehaviour
     {
         SceneManager.LoadScene(gameover);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
