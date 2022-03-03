@@ -11,6 +11,7 @@ public class GameManager : ScriptableObject
 
     public FloatValue timeBetweenWaves;
     public BoolValue isWaveActive;
+    public BoolValue isGameValid;
     public BoolValue isGameBeaten;
 
     [Tooltip("Once an enemy is this close to its active waypoint, it will update and start moving to the next one. Same value for all enemies, set this in the FloatValue.")]

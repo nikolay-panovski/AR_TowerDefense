@@ -20,11 +20,13 @@ public class EnemyPathfindController : MonoBehaviour
 
     public void AddWaypointToList(Waypoint wp)
     {
+        Debug.Log("Waypoint manager length = " + waypointManager.Length);
+        Debug.Log("Trying to add WP with orderID: " + wp.orderID);
         if (waypointManager[wp.orderID] == null)
         {
             // add waypoint only if it is not already located (is NULL)
             waypointManager[wp.orderID] = wp;
-            //Debug.Log("Waypoint with ID " + wp.orderID + " added to controller list");
+            Debug.Log("Waypoint with ID " + wp.orderID + " added to controller list");
         }
     }
 
@@ -55,18 +57,18 @@ public class EnemyPathfindController : MonoBehaviour
         int i = 0;
         do
         {
-            testActiveWaypoint = testWaypointManager[i];
+            activeWaypoint = waypointManager[i];
             i++;
 
             // break check after hitting the end of the array and revert to the original waypoint
-            if (i >= testWaypointManager.Length)
+            if (i >= waypointManager.Length)
             {
-                Debug.LogError("There are no active TestWaypoints at all! Add some to the scene and put their IDs between 0 and 9!");
+                Debug.LogError("There are no active Waypoints at all! Add some to the scene and put their IDs between 0 and 9!");
                 break;
             }
-        } while (testActiveWaypoint == null);
+        } while (activeWaypoint == null);
 
-        //Debug.Log("First active waypoint has ID: " + testActiveWaypoint.orderID);
+        Debug.Log("First active waypoint has ID: " + activeWaypoint.orderID);
     }
 
     /// <summary>

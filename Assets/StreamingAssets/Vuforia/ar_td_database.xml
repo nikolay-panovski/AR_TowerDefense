@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="TeslaTower" size="0.070000 0.117524" />
+    <ImageTarget name="SniperTower" size="0.070000 0.117524" />
+    <ImageTarget name="GatlingGunTower" size="0.070000 0.117524" />
+    <ImageTarget name="TestRender" size="0.120000 0.201622" />
     <ImageTarget name="Astronaut_2" size="1.000000 1.728516" />
     <ImageTarget name="Oxygen" size="0.120000 0.207422" />
     <ImageTarget name="Fissure" size="0.120000 0.207422" />

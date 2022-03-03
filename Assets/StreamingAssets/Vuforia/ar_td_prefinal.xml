@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="Waypoint_3" size="0.120000 0.207273" />
+    <ImageTarget name="waypoint_2" size="0.120000 0.201469" />
+    <ImageTarget name="waypoint1" size="0.120000 0.207273" />
+    <ImageTarget name="TeslaTower" size="0.120000 0.201469" />
+    <ImageTarget name="GatlingGunTower" size="0.120000 0.201469" />
+  </Tracking>
+</QCARConfig>

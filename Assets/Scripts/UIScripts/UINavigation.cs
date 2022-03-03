@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class UINavigation : MonoBehaviour
 {
-    public string home;
-    public string play;
-    public string tutorial;
-    public string gameover;
+    public string home = "UIHome";
+    public string play = "AssetsScriptsTestScene";
+    public string tutorial = "UITutorial";
+    public string gameover = "UIGameOver";
 
     public void LoadHome()
     {

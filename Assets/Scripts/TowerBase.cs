@@ -91,8 +91,8 @@ public class TowerBase : MonoBehaviour
 
         if (isBought == false)
         {
-            if (clickable.isClicked)
-            //if (isTapped)
+            //if (clickable.isClicked)
+            if (isTapped)
             {
                 UIButtonObject.SetActive(false);
                 UIButtonScript.callingTowerBase = this;
@@ -110,8 +110,8 @@ public class TowerBase : MonoBehaviour
 
         else //if (isBought)
         {
-            if (clickable.isClicked)
-            //if (isTapped)
+            //if (clickable.isClicked)
+            if (isTapped)
             {
                 UIButtonObject.SetActive(false);
                 UIButtonScript.callingTowerBase = this;
@@ -166,7 +166,7 @@ public class TowerBase : MonoBehaviour
     {
         if (enemyChecker != null)
         {
-            Gizmos.color = new Color(1, 1, 1, 0.5f);
+            Gizmos.color = new Color(1, 1, 1, 0.9f);
             Gizmos.DrawSphere(transform.position, enemyChecker.range);
         }
     }

@@ -19,7 +19,7 @@ public class EnemyManager : MonoBehaviour
     //private int currentWaveIndex;
     private int currentEnemyIndex;
 
-    private bool canSpawn = true;
+    private bool canSpawn = false;
 
     void Start()
     {
@@ -30,63 +30,68 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        // step 1: wave gets activated via timer
-        // TODO: also assert that wave is not (past) last wave
-        if (gameManager.isGameBeaten.value == false && gameManager.isWaveActive.value == false)
+        if (gameManager.isGameValid.value == true)
         {
-            gameManager.isWaveActive.value = incrementAndCheckCooldown(ref currentTimeBetweenWaves.value, gameManager.timeBetweenWaves.value);
-        }
-
-        // step 2: now that wave is active, start spawning on timer, until there are no enemies left
-        if (gameManager.isWaveActive.value == true)
-        {
-            if (canSpawn)
+            // step 1: wave gets activated via timer
+            // TODO: also assert that wave is not (past) last wave
+            if (gameManager.isGameBeaten.value == false && gameManager.isWaveActive.value == false)
             {
-                if (currentEnemyIndex < currentWave.enemies.Count)
-                {
-                    spawnEnemy(currentEnemy);
+                gameManager.isWaveActive.value = incrementAndCheckCooldown(ref currentTimeBetweenWaves.value, gameManager.timeBetweenWaves.value);
+            }
 
-                    currentEnemyIndex++;
-                }
-
-                if (currentEnemyIndex >= currentWave.enemies.Count)
+            // step 2: now that wave is active, start spawning on timer, until there are no enemies left
+            if (gameManager.isWaveActive.value == true)
+            {
+                if (canSpawn)
                 {
-                    // initiate constant checking whether all enemies' GameObjects are destroyed
-                    // might become heavy... but it works...
-                    foreach (EnemyBase enemy in GetComponentsInChildren<EnemyBase>())
+                    if (currentEnemyIndex < currentWave.enemies.Count)
                     {
-                        if (enemy != null)
-                        {
-                            return;
-                        }
+                        spawnEnemy(currentEnemy);
+
+                        currentEnemyIndex++;
                     }
 
-                    // ~step 3: all enemies destroyed, deactivate wave, prepare next wave for active, return to step 1
-                    gameManager.isWaveActive.value = false;
-                    currentEnemyIndex = 0;
-                    Debug.Log("All enemies for this wave spawned, now wave is inactive!");
-
-                    // ~~waves should all be unique, but if they are not, use the other int for an index
-                    int nextWaveIndex = enemyWaves.IndexOf(currentWave) + 1;
-                    if (nextWaveIndex >= enemyWaves.Count)
+                    if (currentEnemyIndex >= currentWave.enemies.Count)
                     {
-                        // final: all waves cleared
-                        // instead of Debug.Log, trigger a game win clause (screen?) and close wave spawning
-                        gameManager.isGameBeaten.value = true;
-                        Debug.Log("All enemies were spawned and cleared, Game Win!");
+                        // initiate constant checking whether all enemies' GameObjects are destroyed
+                        // might become heavy... but it works...
+                        foreach (EnemyBase enemy in GetComponentsInChildren<EnemyBase>())
+                        {
+                            if (enemy != null)
+                            {
+                                return;
+                            }
+                        }
+
+                        // ~step 3: all enemies destroyed, deactivate wave, prepare next wave for active, return to step 1
+                        gameManager.isWaveActive.value = false;
+                        currentEnemyIndex = 0;
+                        Debug.Log("All enemies for this wave spawned, now wave is inactive!");
+
+                        // ~~waves should all be unique, but if they are not, use the other int for an index
+                        int nextWaveIndex = enemyWaves.IndexOf(currentWave) + 1;
+                        if (nextWaveIndex >= enemyWaves.Count)
+                        {
+                            // final: all waves cleared
+                            // instead of Debug.Log, trigger a game win clause (screen?) and close wave spawning
+                            gameManager.isGameBeaten.value = true;
+                            Debug.Log("All enemies were spawned and cleared, Game Win!");
+                            //gameManager.isGameValid.value = false;    // should only matter if there is no scene change
+                            //UnityEngine.SceneManagement.SceneManager.LoadScene("UIWin");
+                        }
+                        else
+                        {
+                            currentWave = enemyWaves[nextWaveIndex];
+                        }
                     }
                     else
                     {
-                        currentWave = enemyWaves[nextWaveIndex];
+                        currentEnemy = currentWave.enemies[currentEnemyIndex];
                     }
                 }
-                else
-                {
-                    currentEnemy = currentWave.enemies[currentEnemyIndex];
-                }
-            }
 
-            canSpawn = incrementAndCheckCooldown(ref currentSpawnCooldown, timeBetweenEnemies.value);
+                canSpawn = incrementAndCheckCooldown(ref currentSpawnCooldown, timeBetweenEnemies.value);
+            }
         }
     }
 

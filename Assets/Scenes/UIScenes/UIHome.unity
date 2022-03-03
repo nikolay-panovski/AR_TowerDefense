@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   home: UIHome
-  play: UIGameplay
+  play: AssetsScriptsTestScene
   tutorial: UITutorial
   gameover: UIGameOver
 --- !u!1 &973103293
