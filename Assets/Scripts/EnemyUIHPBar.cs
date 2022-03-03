@@ -4,12 +4,12 @@ using UnityEngine.UI;
 public class EnemyUIHPBar : MonoBehaviour
 {
     private EnemyBase enemyBase;
-    private Slider slider;
+    [SerializeField] private Slider slider;
 
     void Start()
     {
         enemyBase = GetComponent<EnemyBase>();
-        slider = GetComponentInChildren<Slider>();
+        //slider = GetComponentInChildren<Slider>();
     }
 
     void FixedUpdate()
