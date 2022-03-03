@@ -19,10 +19,6 @@ public class GameManager : ScriptableObject
 
     public System.Random random { get; } = new System.Random();
 
-    public delegate void GMVerify();
-    // invoke via button OnClick event
-    public event GMVerify OnGMVerify;
-
     public enum Modification
     {
         INCREASE,

@@ -20,6 +20,8 @@ public class EnemyPathfindController : MonoBehaviour
 
     public void AddWaypointToList(Waypoint wp)
     {
+        Debug.Log("Waypoint manager length = " + waypointManager.Length);
+        Debug.Log("Trying to add WP with orderID: " + wp.orderID);
         if (waypointManager[wp.orderID] == null)
         {
             // add waypoint only if it is not already located (is NULL)
@@ -66,7 +68,7 @@ public class EnemyPathfindController : MonoBehaviour
             }
         } while (activeWaypoint == null);
 
-        Debug.Log("First active waypoint has ID: " + testActiveWaypoint.orderID);
+        Debug.Log("First active waypoint has ID: " + activeWaypoint.orderID);
     }
 
     /// <summary>

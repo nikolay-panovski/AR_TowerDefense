@@ -50,7 +50,11 @@ public class EnemyBase : MonoBehaviour
         {
             foreach (Waypoint wp in FindObjectsOfType<Waypoint>(false))
             {
-                pathfindController.AddWaypointToList(wp);
+                // canvas etc. check leads to here, ensures there is at least one ID'd waypoint
+                if (wp.orderID != -1)
+                {
+                    pathfindController.AddWaypointToList(wp);
+                }
             }
             pathfindController.SetFirstActiveWaypoint();
         }

@@ -27,9 +27,13 @@ public class Waypoint : MonoBehaviour
 
     private void OnGotTracked(ObserverBehaviour ob, TargetStatus status)
     {
-        Debug.Log("Waypoint tracked!");
+        if (orderID == -1)
+        //if ((status.Status == Status.TRACKED || status.Status == Status.EXTENDED_TRACKED) && status.StatusInfo == StatusInfo.NORMAL)
+        {
+            Debug.Log("Waypoint tracked!");
 
-        getIDFromParentImage();
+            getIDFromParentImage();
+        }
     }
 
     // crude manual way to obtain reference to the image target and get order number from it, hardcoding in multiple aspects
@@ -41,10 +45,15 @@ public class Waypoint : MonoBehaviour
         bool parseSuccess;
         int tempID;
 
-        parseSuccess = Int32.TryParse(imageTargetName.Substring(imageTargetName.Length - 2), out tempID);
+        Debug.Log("Obtained imageTargetName: " + imageTargetName);
+        string stringedID = imageTargetName.Substring(imageTargetName.Length - 1);
+        Debug.Log("Obtained ID in string form (before TryParse): " + stringedID);
+
+        parseSuccess = Int32.TryParse(stringedID, out tempID);
         if (parseSuccess)
         {
             orderID = tempID;
+            Debug.Log("Final int orderID: " + orderID);
         }
         else
         {

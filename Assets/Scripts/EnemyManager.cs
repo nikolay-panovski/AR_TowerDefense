@@ -19,7 +19,7 @@ public class EnemyManager : MonoBehaviour
     //private int currentWaveIndex;
     private int currentEnemyIndex;
 
-    private bool canSpawn = true;
+    private bool canSpawn = false;
 
     void Start()
     {
@@ -30,7 +30,7 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        if (gameManager.isGameValid.value)
+        if (gameManager.isGameValid.value == true)
         {
             // step 1: wave gets activated via timer
             // TODO: also assert that wave is not (past) last wave
