@@ -19,25 +19,16 @@ public class Waypoint : MonoBehaviour
 
         if (!gotImageTarget)
         {
-            Debug.LogWarning("No ImageTarget got, Waypoint will not be able to get ID!");
+            Debug.LogError("No ImageTarget got, Waypoint will not be able to get ID!");
         }
+
+        parentTarget.OnTargetStatusChanged += OnGotTracked;
     }
 
-    private void Update()
+    private void OnGotTracked(ObserverBehaviour ob, TargetStatus status)
     {
-        
-    }
+        Debug.Log("Waypoint tracked!");
 
-    public void TestEnable()
-    {
-        enabled = true;
-    }
-
-    // WHOLE OBJECT, OR THIS SCRIPT, HAS TO START AS DISABLED! else must find another trigger, consider OnTargetStatusChanged directly.
-    private void OnEnable()
-    {
-        Debug.Log("Waypoint enabled!");
-        
         getIDFromParentImage();
     }
 

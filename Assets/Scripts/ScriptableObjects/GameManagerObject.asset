@@ -16,5 +16,6 @@ MonoBehaviour:
   playerMoney: {fileID: 11400000, guid: 7b817829101255f4c9d2d63a7ac62eb4, type: 2}
   timeBetweenWaves: {fileID: 11400000, guid: 44ab4ac8b8c47154698f6944996a0499, type: 2}
   isWaveActive: {fileID: 11400000, guid: 843c1d570a7679043b1b84e9dd0e653d, type: 2}
+  isGameValid: {fileID: 11400000, guid: 04c54b70792c6a7468b2e4b46ea11322, type: 2}
   isGameBeaten: {fileID: 11400000, guid: ea83c6982afd2244683b52c0b8fc7df0, type: 2}
   minDistToWaypoint: {fileID: 11400000, guid: 1ae39202cf578124097e853030b0777b, type: 2}
