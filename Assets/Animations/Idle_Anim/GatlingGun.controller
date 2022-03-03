@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: EnemyCheck
+    m_ConditionEvent: OnEnemiesDetected
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5018243036679725957}
@@ -17,7 +17,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.5
+  m_TransitionDuration: 0.05
   m_TransitionOffset: 0
   m_ExitTime: 0.9583333
   m_HasExitTime: 0
@@ -34,7 +34,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: EnemyCheck
+    m_ConditionEvent: OnEnemiesDetected
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6629330191111948800}
@@ -84,7 +84,7 @@ AnimatorController:
   m_Name: GatlingGun
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: EnemyCheck
+  - m_Name: OnEnemiesDetected
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
