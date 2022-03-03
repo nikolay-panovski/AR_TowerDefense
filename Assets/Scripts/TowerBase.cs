@@ -91,8 +91,8 @@ public class TowerBase : MonoBehaviour
 
         if (isBought == false)
         {
-            if (clickable.isClicked)
-            //if (isTapped)
+            //if (clickable.isClicked)
+            if (isTapped)
             {
                 UIButtonObject.SetActive(false);
                 UIButtonScript.callingTowerBase = this;
@@ -110,8 +110,8 @@ public class TowerBase : MonoBehaviour
 
         else //if (isBought)
         {
-            if (clickable.isClicked)
-            //if (isTapped)
+            //if (clickable.isClicked)
+            if (isTapped)
             {
                 UIButtonObject.SetActive(false);
                 UIButtonScript.callingTowerBase = this;

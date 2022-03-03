@@ -48,7 +48,7 @@ public class EnemyBase : MonoBehaviour
 
         else
         {
-            foreach (TestWaypoint wp in FindObjectsOfType<TestWaypoint>(false))
+            foreach (Waypoint wp in FindObjectsOfType<Waypoint>(false))
             {
                 pathfindController.AddWaypointToList(wp);
             }
@@ -59,7 +59,7 @@ public class EnemyBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TestWaypoint activeWP = pathfindController.GetActiveTestWaypoint();
+        Waypoint activeWP = pathfindController.GetActiveWaypoint();
         if (activeWP != null)
         {
             moveController.SetDestination(activeWP.GetPosition());
@@ -68,9 +68,9 @@ public class EnemyBase : MonoBehaviour
 
             if (distVec.magnitude < gameManager.minDistToWaypoint.value)
             {
-                hasReachedGoal = !pathfindController.TestSetActiveWaypoint();
+                hasReachedGoal = !pathfindController.SetActiveWaypoint();
                 // **if the enemy path does not change on card move or seems broken, then we'd need to set the destination constantly in Update()
-                if (hasReachedGoal == false) moveController.SetDestination(pathfindController.GetActiveTestWaypoint().GetPosition());
+                if (hasReachedGoal == false) moveController.SetDestination(pathfindController.GetActiveWaypoint().GetPosition());
             }
 
             // base the tower rotation on this

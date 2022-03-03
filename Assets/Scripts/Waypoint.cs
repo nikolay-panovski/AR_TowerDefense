@@ -5,33 +5,21 @@ using Vuforia;
 // Container for the position of a dedicated ImageTarget object (physical cards) for enemy pathfinding.
 // Attach as a child GameObject to an ImageTarget.
 
-[RequireComponent(typeof(EnemyPathfindController))]
 public class Waypoint : MonoBehaviour
 {
-    private /*IPathfindingController*/ EnemyPathfindController pathfindingController;
-
     private ImageTargetBehaviour parentTarget;
     private string imageTargetName;
     public int orderID { get; private set; } = -1;
 
     private void Start()
     {
-        bool gotPathfController;
         bool gotImageTarget;
 
-        gotPathfController = TryGetComponent<EnemyPathfindController>(out pathfindingController);
-
         gotImageTarget = transform.parent.TryGetComponent<ImageTargetBehaviour>(out parentTarget);
-        //parentTarget.OnTargetStatusChanged += TestPrintPosition;
-
-        if (pathfindingController == null)
-        {
-            Debug.LogWarning("One or more Waypoints do not have a Pathfinding Controller assigned to their scripts!");
-        }
 
         if (!gotImageTarget)
         {
-            Debug.LogWarning("No ImageTarget got, Waypoint will not be able to geet ID!");
+            Debug.LogWarning("No ImageTarget got, Waypoint will not be able to get ID!");
         }
     }
 
@@ -51,8 +39,6 @@ public class Waypoint : MonoBehaviour
         Debug.Log("Waypoint enabled!");
         
         getIDFromParentImage();
-
-        pathfindingController.AddWaypointToList(this);
     }
 
     // crude manual way to obtain reference to the image target and get order number from it, hardcoding in multiple aspects
