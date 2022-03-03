@@ -6,6 +6,7 @@ using UnityEngine;
 // can reach goal, dying in the process and updating the player health on death.            -- this (interaction check) + fire event on goal/destroy
 
 // Unity can go perform sudoku honestly
+[RequireComponent(typeof(EnemyUIHPBar))]
 [RequireComponent(typeof(EnemyAutoMoveController))]
 [RequireComponent(typeof(EnemyPathfindController))]
 public class EnemyBase : MonoBehaviour
@@ -13,10 +14,10 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private GameManager gameManager;   // not the most optimal anymore ngl ... but good practice for SA
 
     [Header("Enemy stats")]
-    [SerializeField] private float maxHP;
-    private float hp;
     [SerializeField] private float initialSpeed;
     private float speed;
+    [field: SerializeField] public float maxHP { get; private set; }
+    public float hp { get; private set; }
     [SerializeField] private int damageToGoal;
     [SerializeField] private int minScrapOnDeath;
     [SerializeField] private int maxScrapOnDeath;

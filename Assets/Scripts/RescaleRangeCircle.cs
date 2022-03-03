@@ -7,7 +7,7 @@ public class RescaleRangeCircle : MonoBehaviour
     void Start()
     {
         enemyChecker = GetComponentInParent<TowerEnemyChecker>();
-        // do not even ask me why 150 is a sensible scale
-        gameObject.transform.localScale = new Vector3(150 * enemyChecker.range, 150 * enemyChecker.range, 1);
+        // do not even ask me why 12.5 is a sensible scale (previously it was 150)
+        gameObject.transform.localScale = new Vector3(12.5f * enemyChecker.range, 12.5f * enemyChecker.range, 1);
     }
 }

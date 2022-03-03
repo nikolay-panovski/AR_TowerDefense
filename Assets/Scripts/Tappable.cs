@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// ooga booga, raycast need collider
+[RequireComponent(typeof(BoxCollider))]
 public class Tappable : MonoBehaviour
 {
     //[SerializeField] private Camera AR_Camera;

@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 11400000, guid: 9ccb834f2d37bdb4d9ee4feccf96648f, type: 2}
-  maxHP: 500
   initialSpeed: 2
+  <maxHP>k__BackingField: 500
   damageToGoal: 2
   minScrapOnDeath: 5
   maxScrapOnDeath: 10

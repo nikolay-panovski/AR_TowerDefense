@@ -11,7 +11,6 @@ using UnityEngine;
 // AttackType must be changeable/flexible, as some ideas include chain of proj->AoE, or ability temp switching from proj to AoE
 // Attack ->
 
-[RequireComponent(typeof(Clickable))]        // TEMP -- NO AR
 [RequireComponent(typeof(Tappable))]
 [RequireComponent(typeof(TowerEnemyChecker))]
 [RequireComponent(typeof(TowerAttackController))]
@@ -24,14 +23,18 @@ public class TowerBase : MonoBehaviour
     private /*IEnemyChecker*/ TowerEnemyChecker enemyChecker;
     private /*IAttackController*/ TowerAttackController attackController;
 
+    private Animator animator;
+    [SerializeField] private GameObject rotateablePart;
+
     [SerializeField] private TextureContainer texture;
 
-    private Clickable clickable;
     private Tappable tappable;
 
     public bool isBought = false;  // isActive
     private bool wasBoughtLastFrame;
     private bool canAttack = false;
+
+    private bool enemiesInRange = false;
 
     [Header("Tower stats (also look at other scripts!)")]
     [SerializeField] private float attackCooldown;
@@ -47,14 +50,10 @@ public class TowerBase : MonoBehaviour
         UIButtonScript = UIButtonObject.GetComponent<UI_TowerTradeButton>();
         towerPartsRenderers = GetComponentsInChildren<Renderer>();
 
-        /**/
-        bool gotClickable, gotTappable, gotChecker, gotAttacker;
-        gotClickable = TryGetComponent<Clickable>(out clickable);
+        animator = GetComponent<Animator>();
 
-        if (gotClickable == false)
-        {
-            Debug.LogError("Clickable component not found, attach one!");
-        }
+        /**/
+        bool gotTappable, gotChecker, gotAttacker;
 
         gotTappable = TryGetComponent<Tappable>(out tappable);
 
@@ -126,22 +125,48 @@ public class TowerBase : MonoBehaviour
                 }
             }
 
-            // also check for suitable conditionals, related to being visible
             canAttack = incrementAndCheckCooldown();
 
-            if (canAttack)
-            {
-                enemyChecker.CheckForEnemiesInRange();
+            bool enemiesLastFrame = enemiesInRange;
 
-                // AoE version
-                foreach (EnemyBase enemy in enemyChecker.detectedEnemies)
+            enemyChecker.CheckForEnemiesInRange();
+
+            if (enemyChecker.detectedEnemies.Count > 0)
+            {
+                enemiesInRange = true;
+                if (canAttack)
                 {
-                    attackController.PerformAttack(enemy);
+                    // AoE version
+                    foreach (EnemyBase enemy in enemyChecker.detectedEnemies)
+                    {
+                        attackController.PerformAttack(enemy);
+                    }
+
+                    // for single projectile version, PerformAttack(detectedEnemies(0)) outside of foreach
+
+                    canAttack = false;  // just in case
                 }
 
-                // for single projectile version, PerformAttack(detectedEnemies(0)) outside of foreach
+                if (enemiesLastFrame == false)
+                {
+                    animator.SetBool("OnEnemiesDetected", true);
+                }
 
-                canAttack = false;  // just in case
+                if (rotateablePart != null)
+                {
+                    rotateablePart.transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                        Quaternion.LookRotation((enemyChecker.detectedEnemies[0].transform.position - transform.position).normalized), 0.25f);
+                }
+            }
+
+            else
+            {
+                enemiesInRange = false;
+
+                if (enemiesLastFrame == true)
+                {
+                    animator.SetBool("OnEnemiesDetected", false);
+                }
             }
         }
 
@@ -161,7 +186,6 @@ public class TowerBase : MonoBehaviour
         return false;
     }
 
-    // debug for tower range
     private void OnDrawGizmosSelected()
     {
         if (enemyChecker != null)
