@@ -11,6 +11,12 @@ using UnityEngine;
 // AttackType must be changeable/flexible, as some ideas include chain of proj->AoE, or ability temp switching from proj to AoE
 // Attack ->
 
+public enum TowerType
+{
+    AOE,
+    Projectile
+}
+
 [RequireComponent(typeof(Tappable))]
 [RequireComponent(typeof(TowerEnemyChecker))]
 [RequireComponent(typeof(TowerAttackController))]
@@ -25,6 +31,7 @@ public class TowerBase : MonoBehaviour
 
     private Animator animator;
     [SerializeField] private GameObject rotateablePart;
+    [SerializeField] private AudioSource attackAudio;
 
     [SerializeField] private TextureContainer texture;
 
@@ -37,6 +44,7 @@ public class TowerBase : MonoBehaviour
     private bool enemiesInRange = false;
 
     [Header("Tower stats (also look at other scripts!)")]
+    [SerializeField] private TowerType towerType;
     [SerializeField] private float attackCooldown;
     private float currentCooldown;
     [field: SerializeField] public int towerCost { get; private set; }
@@ -136,13 +144,20 @@ public class TowerBase : MonoBehaviour
                 enemiesInRange = true;
                 if (canAttack)
                 {
-                    // AoE version
-                    foreach (EnemyBase enemy in enemyChecker.detectedEnemies)
+                    if (towerType == TowerType.AOE)
                     {
-                        attackController.PerformAttack(enemy);
+                        foreach (EnemyBase enemy in enemyChecker.detectedEnemies)
+                        {
+                            attackController.PerformAttack(enemy);
+                        }
+                    }
+                    
+                    else if (towerType == TowerType.Projectile)
+                    {
+                        attackController.PerformAttack(enemyChecker.detectedEnemies[0]);
                     }
 
-                    // for single projectile version, PerformAttack(detectedEnemies(0)) outside of foreach
+                    Instantiate(attackAudio);
 
                     canAttack = false;  // just in case
                 }

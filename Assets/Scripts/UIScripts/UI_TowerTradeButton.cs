@@ -12,6 +12,9 @@ public class UI_TowerTradeButton : MonoBehaviour
     [SerializeField] private Sprite buySprite;
     [SerializeField] private Sprite sellSprite;
 
+    [SerializeField] private AudioSource buyAudio;
+    [SerializeField] private AudioSource sellAudio;
+
     private TMPro.TMP_Text costText;
 
     private void Awake()
@@ -57,6 +60,8 @@ public class UI_TowerTradeButton : MonoBehaviour
                 gameManager.ModifyPlayerValue(gameManager.playerMoney, GameManager.Modification.DECREASE, callingTowerCost);
                 callingTowerBase.isBought = true;
 
+                Instantiate(buyAudio);
+
                 gameObject.SetActive(false);
             }
         }
@@ -66,6 +71,8 @@ public class UI_TowerTradeButton : MonoBehaviour
             // tower bought, try to sell
             gameManager.ModifyPlayerValue(gameManager.playerMoney, GameManager.Modification.INCREASE, callingTowerCost);
             callingTowerBase.isBought = false;
+
+            Instantiate(sellAudio);
 
             gameObject.SetActive(false);
         }

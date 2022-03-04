@@ -6,6 +6,7 @@ using UnityEngine;
 // can reach goal, dying in the process and updating the player health on death.            -- this (interaction check) + fire event on goal/destroy
 
 // Unity can go perform sudoku honestly
+[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(EnemyUIHPBar))]
 [RequireComponent(typeof(EnemyAutoMoveController))]
 [RequireComponent(typeof(EnemyPathfindController))]
@@ -26,6 +27,9 @@ public class EnemyBase : MonoBehaviour
     // same in TowerBase.cs and wherever else relevant. format (of commented but listed interfaces) also preserved.
     private /*ITargetMoveController*/ EnemyAutoMoveController moveController;
     private /*IPathfindingController*/ EnemyPathfindController pathfindController;
+
+    [SerializeField] private GameObject goalPrefab;
+    [SerializeField] private GameObject deathPrefab;
 
     private bool hasReachedGoal = false;
 
@@ -92,6 +96,7 @@ public class EnemyBase : MonoBehaviour
         if (hasReachedGoal)
         {
             gameManager.ModifyPlayerValue(gameManager.playerHP, GameManager.Modification.DECREASE, damageToGoal);
+            Instantiate(goalPrefab);
             Destroy(gameObject);
         }
 
@@ -101,6 +106,7 @@ public class EnemyBase : MonoBehaviour
         {
             gameManager.ModifyPlayerValue(gameManager.playerMoney, GameManager.Modification.INCREASE, 
                 gameManager.random.Next(minScrapOnDeath, maxScrapOnDeath + 1));
+            Instantiate(deathPrefab);
             Destroy(gameObject);
         }
     }

@@ -944,6 +944,10 @@ MonoBehaviour:
   damageToGoal: 2
   minScrapOnDeath: 5
   maxScrapOnDeath: 10
+  goalPrefab: {fileID: 7227775255518433192, guid: c3849224f9225cd48bfac3d01c73560e,
+    type: 3}
+  deathPrefab: {fileID: 63366694718101702, guid: a55721adb236e06468cf003c09e63db6,
+    type: 3}
 --- !u!114 &5365809162757323570
 MonoBehaviour:
   m_ObjectHideFlags: 0
