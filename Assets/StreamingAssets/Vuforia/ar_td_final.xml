@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="TeslaTowerText" size="0.120000 0.201469" />
+    <ImageTarget name="SniperTowerText" size="0.120000 0.201469" />
+    <ImageTarget name="GatlingGunTowerText" size="0.120000 0.201469" />
     <ImageTarget name="EndPointText_3" size="0.120000 0.201469" />
     <ImageTarget name="WayPointText_2" size="0.120000 0.201469" />
     <ImageTarget name="StartPointText_1" size="0.120000 0.201469" />
-    <ImageTarget name="TeslaTower" size="0.120000 0.201469" />
-    <ImageTarget name="SniperTower" size="0.120000 0.201469" />
-    <ImageTarget name="GatlingGunTower" size="0.120000 0.201469" />
   </Tracking>
 </QCARConfig>
