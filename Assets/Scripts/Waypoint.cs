@@ -30,8 +30,6 @@ public class Waypoint : MonoBehaviour
         if (orderID == -1)
         //if ((status.Status == Status.TRACKED || status.Status == Status.EXTENDED_TRACKED) && status.StatusInfo == StatusInfo.NORMAL)
         {
-            Debug.Log("Waypoint tracked!");
-
             getIDFromParentImage();
         }
     }
@@ -45,15 +43,12 @@ public class Waypoint : MonoBehaviour
         bool parseSuccess;
         int tempID;
 
-        Debug.Log("Obtained imageTargetName: " + imageTargetName);
         string stringedID = imageTargetName.Substring(imageTargetName.Length - 1);
-        Debug.Log("Obtained ID in string form (before TryParse): " + stringedID);
 
         parseSuccess = Int32.TryParse(stringedID, out tempID);
         if (parseSuccess)
         {
             orderID = tempID;
-            Debug.Log("Final int orderID: " + orderID);
         }
         else
         {

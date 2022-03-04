@@ -32,8 +32,14 @@ public class EnemyManager : MonoBehaviour
     {
         if (gameManager.isGameValid.value == true)
         {
+            if (gameManager.playerHP.value <= 0)
+            {
+                gameManager.isGameBeaten.value = false;
+                gameManager.isGameValid.value = false;
+                UnityEngine.SceneManagement.SceneManager.LoadScene("UIGameOver");
+            }
+
             // step 1: wave gets activated via timer
-            // TODO: also assert that wave is not (past) last wave
             if (gameManager.isGameBeaten.value == false && gameManager.isWaveActive.value == false)
             {
                 gameManager.isWaveActive.value = incrementAndCheckCooldown(ref currentTimeBetweenWaves.value, gameManager.timeBetweenWaves.value);
@@ -66,18 +72,13 @@ public class EnemyManager : MonoBehaviour
                         // ~step 3: all enemies destroyed, deactivate wave, prepare next wave for active, return to step 1
                         gameManager.isWaveActive.value = false;
                         currentEnemyIndex = 0;
-                        Debug.Log("All enemies for this wave spawned, now wave is inactive!");
 
-                        // ~~waves should all be unique, but if they are not, use the other int for an index
                         int nextWaveIndex = enemyWaves.IndexOf(currentWave) + 1;
                         if (nextWaveIndex >= enemyWaves.Count)
                         {
-                            // final: all waves cleared
-                            // instead of Debug.Log, trigger a game win clause (screen?) and close wave spawning
                             gameManager.isGameBeaten.value = true;
-                            Debug.Log("All enemies were spawned and cleared, Game Win!");
-                            //gameManager.isGameValid.value = false;    // should only matter if there is no scene change
-                            //UnityEngine.SceneManagement.SceneManager.LoadScene("UIWin");
+                            gameManager.isGameValid.value = false;
+                            UnityEngine.SceneManagement.SceneManager.LoadScene("UIWin");
                         }
                         else
                         {
